@@ -37,11 +37,16 @@ V1-LaTeX/
 ├── referencias.bib       38 fuentes núcleo, APA 7 con DOI
 └── secciones/
     ├── 00-portada.tex
-    ├── 01-resumen.tex               Resumen + Abstract
-    ├── 02-introduccion.tex          §1
-    ├── 03-contexto-del-problema.tex §2
+    ├── 01-resumen.tex                   Resumen + Abstract
+    ├── 02-introduccion.tex              §1
+    ├── 03-contexto-del-problema.tex     §2
     ├── 04-problema-de-investigacion.tex §3
-    └── 05-justificacion.tex         §4
+    ├── 05-justificacion.tex             §4
+    ├── 06-antecedentes.tex              §5
+    ├── 07-estado-del-arte.tex           §6
+    ├── 08-marco-teorico.tex             §7
+    ├── 09-marco-conceptual.tex          §8
+    └── 10-brecha-de-investigacion.tex   §9
 ```
 
 Las partes aún no escritas están como `\input` comentados en `main.tex`, con el
@@ -53,7 +58,7 @@ nombre de archivo ya previsto. Para activarlas basta descomentar la línea.
 |---|---|---|
 | 0 | Andamiaje LaTeX + `referencias.bib` (38 fuentes) | **Listo** |
 | 1 | Parte I — Contexto y problema | **Listo** |
-| 2 | Parte II — Antecedentes, estado del arte, marco teórico, marco conceptual, brecha | Pendiente |
+| 2 | Parte II — Antecedentes, estado del arte, marco teórico, marco conceptual, brecha | **Listo** |
 | 3 | Parte III — Preguntas, objetivos, proposiciones, variables, modelo conceptual (TikZ) | Pendiente |
 | 4 | Parte IV — Artefacto: descripción, arquitectura, componentes de IA, benchmark, estado del MVP | Pendiente |
 | 5 | Parte V — Metodología de evaluación: DSR, diseño experimental, ground truth, baselines, ablaciones, instrumentos, métricas, plan de análisis, reproducibilidad | Pendiente |
@@ -104,6 +109,36 @@ cada sección nueva.
 6. **Atchley et al. [21]** — la ficha recomienda bajarlo de Núcleo a Apoyo (es un
    ensayo de perspectiva sin datos). Aún no se ha citado; se usará como contexto en
    la Parte II, no como evidencia.
+
+## Decisiones tomadas en el Bloque 2
+
+1. **División de trabajo entre secciones.** Antecedentes = trayectoria histórica y
+   dónde se detuvo cada línea. Estado del arte = qué está establecido hoy, con cifras,
+   por las ocho líneas de la matriz. Marco teórico = los constructos y su papel en el
+   diseño de la investigación, no descripción de tecnologías (eso va en la Parte IV).
+   Marco conceptual = definiciones operacionales y distinciones que el documento
+   mantiene.
+2. **Líneas A y B no se repiten.** Su contenido sustantivo está en §2 (contexto del
+   problema); §6.1 solo retoma los tres resultados que condicionan el diseño y
+   remite. Evita duplicar media Parte I.
+3. **Tabla de distinciones (§8.4).** Ocho pares de términos que no deben usarse como
+   equivalentes (similitud ≠ confianza ≠ calibración, contradicción ≠ sin evidencia,
+   trazabilidad del proceso ≠ fundamentación de la salida, etc.). Es la defensa contra
+   el error más probable en la exposición oral.
+4. **La brecha se formuló estrecha a propósito.** No se afirma que falte investigación
+   sobre IA en educación ni sobre RAG. Se afirma que la intersección específica
+   —inconsistencia intracorpus como *objeto*, corpus de curso, español, atribución por
+   componentes— no está cubierta. El argumento central: Lewis et al. (2020) declaran
+   explícitamente que no abordan qué ocurre cuando la fuente se contradice
+   internamente, que es justamente el caso de este proyecto.
+5. **Controles negativos como requisito.** Gubelmann et al. (2024) muestran que con
+   desbalance realista un modelo puede colapsar atribuyendo relaciones inexistentes.
+   Un benchmark solo con defectos plantados mide *recall* y no dice nada sobre
+   precisión. Queda fijado en §8.2 y condiciona el Bloque 4.
+6. **Atchley et al. [21] y Miao et al. [23]** se usan con advertencia explícita de que
+   son ensayo de perspectiva y documento de política, sin evidencia empírica propia.
+7. **`xltabular` en lugar de `longtable`.** Las columnas `X` no funcionan dentro de
+   `longtable`; las tablas largas de las Partes II y V usan `xltabular`.
 
 ## Pendientes que arrastra el Bloque 1
 

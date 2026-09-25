@@ -1,0 +1,208 @@
+% =====================================================================
+%  9. Brecha de investigación
+% =====================================================================
+\section{Brecha de investigación y aporte que se pretende estudiar}
+\label{sec:brecha}
+
+\subsection{Qué está establecido y qué no}
+\label{sec:brecha-balance}
+
+La tabla~\ref{tab:balance} resume, por línea, lo que la literatura permite dar por
+establecido y lo que queda sin responder para el problema de esta investigación.
+
+\begin{xltabular}{\textwidth}{@{}c L{5.1cm} X@{}}
+\caption{Balance por línea: establecido frente a no resuelto}
+\label{tab:balance} \\
+\toprule
+\textbf{L.} & \textbf{Lo que está establecido} & \textbf{Lo que no está resuelto para este problema} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\textit{(continuación de la tabla \ref{tab:balance})}} \\
+\toprule
+\textbf{L.} & \textbf{Lo que está establecido} & \textbf{Lo que no está resuelto para este problema} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+A &
+La calidad de un recurso educativo es multidimensional y la exactitud del contenido
+es su dimensión dominante; existen instrumentos validados de revisión humana. &
+Los instrumentos evalúan el recurso aislado. No existe instrumento para la
+consistencia \emph{entre} documentos de una misma colección. \\
+
+A &
+El aseguramiento de calidad en repositorios combina política, tecnología y
+participación comunitaria. &
+Lo automatizado se detiene en metadatos, enlaces y recomendaciones; ningún
+instrumento del inventario verifica el contenido. \\
+
+B &
+La IA generativa redistribuye la carga docente; la revisión de sus salidas es trabajo
+nuevo. &
+No hay evidencia sobre el efecto de un asistente de curación documental sobre el
+tiempo y la carga percibida del docente. \\
+
+B &
+La curación de materiales es un tema marginal en las síntesis de AIED
+(4,5\,\% y 7,6\,\% de las revisiones). &
+No se sabe si el escaso volumen refleja ausencia de investigación primaria o ausencia
+de síntesis. \\
+
+C &
+La tarea de consistencia se formaliza con tres clases y evidencia localizada; la
+contradicción es la clase más difícil y la neutral la peor reconocida. &
+Los resultados provienen de contratos y texto enciclopédico en inglés. No hay
+evidencia sobre documentación de cursos ni sobre corpus en español. \\
+
+C &
+Las métricas basadas en inferencia superan a las de n-gramas para consistencia
+factual; la granularidad atómica alinea mejor con el juicio humano. &
+Las métricas se degradan con fuentes de más de 200 \emph{tokens} y fallan ante
+inconsistencias sutiles. No hay protocolo establecido para documentos largos de
+curso. \\
+
+D &
+Ningún recuperador ni \emph{embedding} es universalmente superior; la combinación de
+recuperación léxica y densa ayuda en algunos casos. &
+La selección para un corpus en español de dominio académico no puede justificarse con
+los bancos de prueba disponibles, que son en inglés. \\
+
+D &
+El patrón RAG ancla la generación en documentos y permite actualizar el conocimiento
+cambiando el índice. &
+La formulación fundacional \textbf{asume un índice razonablemente consistente} y no
+aborda qué ocurre cuando la fuente se contradice internamente. \\
+
+D$'$ &
+Existen tres marcos de evaluación de RAG con concordancia humana reportada y
+diagnóstico por componente. &
+Sus jueces pierden concordancia al cambiar de idioma ($\tau$ de Kendall 0,33 al pasar
+al español). No pueden adoptarse sin validación propia. \\
+
+E &
+El patrón de razonamiento y acción produce trayectorias más ancladas en evidencia;
+sus modos de fallo están caracterizados. &
+No está demostrado que un agente supere a una canalización fija en tareas
+estructuradas como la curación documental. \\
+
+E &
+Los agentes con herramientas son vulnerables a instrucciones inyectadas en el
+contenido que procesan, sobre todo en campos de texto libre. &
+No hay evaluación de esa superficie de ataque en sistemas que ingieren documentos
+educativos cargados por usuarios. \\
+
+F &
+Las redes modernas están descalibradas y tienden a la sobreconfianza; la calibración
+exige un conjunto independiente con etiquetas verdaderas. &
+No se sabe si un puntaje de confianza construido heurísticamente sobre señales de
+recuperación y detección guarda relación con la corrección observada. \\
+
+F &
+Los puntajes de confianza mal calibrados pueden inducir confianza inapropiada; solo
+el 14\,\% de los estudios considera el continuo completo. &
+No hay evidencia sobre cómo un docente calibra su confianza frente a sugerencias de
+curación acompañadas de evidencia. \\
+
+G &
+La memoria de retroalimentación permite aprovechar decisiones previas sin
+reentrenar; sus riesgos de recolección están documentados. &
+No se ha medido si los precedentes de decisiones docentes mejoran la concordancia con
+decisiones futuras sobre instancias no usadas para construir el contexto. \\
+
+G &
+Existen modelo de procedencia y marcos de gobernanza que fijan requisitos de
+trazabilidad y supervisión. &
+Los marcos prescriben qué documentar; no establecen si el registro resultante es
+suficiente para que un docente reconstruya y audite una decisión. \\
+
+H &
+El repertorio metodológico de evaluación de artefactos está consolidado; existe un
+instrumento validado de carga percibida. &
+El campo lo aplica de forma irregular: 65\,\% de las revisiones de calidad crítica a
+media y 51,5\,\% sin acuerdo entre revisores reportado. \\
+\end{xltabular}
+
+\subsection{Formulación de la brecha}
+\label{sec:brecha-formulacion}
+
+Las filas anteriores convergen en un punto. Las dos literaturas que tocan el problema
+lo hacen desde supuestos incompatibles con él:
+
+\begin{itemize}
+  \item La literatura de \textbf{calidad de recursos educativos} sabe evaluar el
+        recurso, pero su automatización no llega al contenido y su unidad de análisis
+        es el documento aislado, no la relación entre documentos.
+  \item La literatura de \textbf{recuperación aumentada e inferencia documental} sabe
+        verificar afirmaciones contra evidencia, pero \textbf{asume que el corpus de
+        referencia es consistente}. \textcite{lewis2020retrieval} no abordan qué
+        ocurre cuando la fuente se contradice internamente, y
+        \textcite{gao2024retrieval} advierten que la información errónea recuperada
+        puede ser peor que la ausencia de información.
+\end{itemize}
+
+\begin{estado}[colframe=ecAzul]
+\small
+\textbf{Brecha.} No existe evidencia sobre el comportamiento de un sistema de
+recuperación aumentada con supervisión humana cuando \textbf{la inconsistencia del
+propio corpus es el objeto de detección y no un supuesto violado}, y menos aún sobre
+documentación de cursos en español. Tampoco existe evidencia sobre qué componentes de
+una arquitectura de ese tipo explican su comportamiento, ni sobre su efecto en el
+trabajo del docente.
+\end{estado}
+
+Esta brecha es estrecha por diseño. No se afirma que falte investigación sobre IA en
+educación, ni sobre RAG, ni sobre detección de contradicciones. Se afirma que la
+intersección específica --- inconsistencia intracorpus como objeto, corpus de curso
+como dominio, español como idioma, y atribución del desempeño a componentes --- no
+está cubierta.
+
+\subsection{Aporte que se pretende estudiar}
+\label{sec:brecha-aporte}
+
+El aporte que esta investigación persigue no es el sistema. Es el conocimiento que su
+evaluación puede producir, en cuatro frentes:
+
+\begin{enumerate}
+  \item \textbf{Caracterización del desempeño por clase de defecto.} Determinar con
+        qué precisión y \emph{recall} se detecta cada clase --- contradicción,
+        redundancia, desactualización --- y con qué tasa de falsos positivos sobre
+        controles negativos, reportando las clases por separado dada la asimetría de
+        dificultad documentada en la línea C.
+  \item \textbf{Atribución del desempeño a componentes.} Determinar cuánto aporta cada
+        elemento de la arquitectura mediante configuraciones de comparación y
+        ablaciones, en lugar de evaluar el sistema como un todo indivisible.
+  \item \textbf{Relación entre confianza estimada y corrección observada.}
+        Determinar si el puntaje que el sistema produce guarda correspondencia
+        estadística con su tasa de acierto y, en caso negativo, si un método de
+        calibración establecido la restablece.
+  \item \textbf{Efecto sobre el trabajo del docente.} Determinar cómo se modifican el
+        tiempo de ejecución y la carga percibida frente a una condición de revisión
+        sin asistencia, midiendo ambas dimensiones por la advertencia de
+        \textcite{su2026efficiency} sobre la insuficiencia del tiempo como único
+        indicador.
+\end{enumerate}
+
+\subsection{Productos de conocimiento previstos}
+\label{sec:brecha-productos}
+
+Además de los resultados, la investigación prevé producir tres artefactos de
+conocimiento reutilizables con independencia del sistema:
+
+\begin{itemize}
+  \item Un \textbf{benchmark anotado} de inconsistencias en documentación de cursos en
+        español, con defectos plantados, controles negativos, evidencia esperada y
+        acuerdo entre anotadores reportado.
+  \item Un \textbf{protocolo de evaluación} que adapte los marcos de la línea D$'$ a
+        un corpus en español, incluida la validación de los jueces automáticos contra
+        anotación humana.
+  \item Una \textbf{taxonomía operacional de defectos} de documentación de cursos,
+        derivada de la literatura y verificable en la anotación.
+\end{itemize}
+
+\begin{advertencia}
+Estos tres productos son \emph{previstos}, no existentes. El benchmark inicial
+descrito en la Parte~IV es una versión piloto sin anotación independiente ni acuerdo
+entre anotadores calculado. Presentarlo hoy como benchmark validado sería una
+afirmación de la categoría (A) sin evidencia que la sustente.
+\end{advertencia}

@@ -1,0 +1,188 @@
+% =====================================================================
+%  7. Marco teórico
+% =====================================================================
+\section{Marco teórico}
+\label{sec:marco-teorico}
+
+El marco teórico no describe las tecnologías empleadas --- eso corresponde a la
+Parte~IV --- sino los \textbf{constructos} con los que esta investigación piensa el
+problema. Cada uno se presenta con tres elementos: qué afirma, de dónde proviene y
+qué papel cumple en el diseño de la investigación.
+
+\subsection{Calidad del corpus como propiedad relacional}
+\label{sec:teo-calidad}
+
+La literatura de calidad de recursos educativos trata la calidad como una propiedad
+\emph{del recurso}: LORI evalúa nueve dimensiones de un objeto de aprendizaje
+\parencite{leacock2007framework} y el modelo por capas de
+\textcite{tabares2017modelo} integra tres visiones sobre un mismo objeto. Esta
+investigación introduce un desplazamiento: sobre el corpus de un curso, parte de la
+calidad no reside en ningún documento sino en la \textbf{relación entre documentos}.
+
+Dos documentos individualmente exactos pueden ser conjuntamente inconsistentes. Un
+documento sin errores puede estar desactualizado respecto de otro que lo sustituyó
+sin retirarlo. Un contenido correcto puede ser redundante respecto de otro
+equivalente. En los tres casos, la unidad evaluable es el par o el conjunto, no el
+elemento.
+
+\begin{estado}
+\small
+\textbf{Papel en la investigación.} Este desplazamiento determina la unidad de
+análisis del benchmark: las instancias etiquetadas no son documentos sino
+\emph{relaciones} entre fragmentos, con su evidencia asociada. Determina también por
+qué los instrumentos de la línea A no pueden adoptarse directamente como medida de
+resultado.
+\end{estado}
+
+\subsection{La consistencia como relación de inferencia de tres valores}
+\label{sec:teo-inferencia}
+
+El constructo que permite formalizar la detección proviene de la inferencia en
+lenguaje natural. Dada una afirmación y un texto de referencia, la relación admite
+tres valores: el texto \textbf{implica} la afirmación, la \textbf{contradice}, o
+\textbf{no aporta información suficiente} para decidir. La tarea de
+\textcite{thorne2018fever} fija esas tres clases con un criterio de anotación
+conservador --- sin evidencia explícita, la clase es la tercera, aunque el anotador
+crea saber la respuesta --- y \textcite{koreeda2021contractnli} la trasladan al nivel
+documental exigiendo que se identifique la evidencia que sustenta la decisión.
+
+La adopción de este constructo tiene tres consecuencias:
+
+\begin{enumerate}
+  \item \textbf{La clase neutral no es un residuo.} \enquote{No encontré con qué
+        comparar esto} es una salida informativa y distinta de \enquote{esto no se
+        contradice con nada}. Colapsarlas produce alertas que el docente no puede
+        interpretar.
+  \item \textbf{La verificación es relativa a la fuente.} Lo que se decide no es si
+        una afirmación es verdadera, sino si está respaldada por el corpus
+        consultado. \textcite{thorne2018fever} evitan deliberadamente el vocabulario
+        de verdadero y falso por esta razón.
+  \item \textbf{La dificultad es asimétrica entre clases.} La contradicción es la
+        clase más difícil \parencite{koreeda2021contractnli} y la neutral la peor
+        reconocida \parencite{gubelmann2024capturing}. Un desempeño agregado oculta
+        esta asimetría, por lo que las métricas deben reportarse por clase.
+\end{enumerate}
+
+\subsection{Anclaje en evidencia}
+\label{sec:teo-evidencia}
+
+El anclaje --- que cada afirmación del sistema remita a fragmentos localizables del
+corpus --- cumple aquí tres funciones que conviene no confundir.
+
+Como \textbf{mecanismo de mitigación}, reduce la dependencia de la memoria
+paramétrica del modelo \parencite{lewis2020retrieval}, aunque no elimina la
+alucinación \parencite{huang2025survey}. Como \textbf{condición de verificabilidad},
+permite que el usuario localice la referencia original y compruebe la afirmación,
+manteniendo observable un proceso que de otro modo sería opaco
+\parencite[p.~14]{gao2024retrieval}. Como \textbf{objeto de medición}, convierte la
+fidelidad en una propiedad evaluable: puede verificarse, afirmación por afirmación,
+si la evidencia citada la sustenta \parencite{min2023factscore,es2024ragas}.
+
+\begin{advertencia}
+La tercera función depende de la primera pero no se sigue de ella. Que un sistema
+exhiba evidencia no implica que la evidencia sustente lo que se afirma. Un sistema
+puede citar fragmentos reales y aun así derivar de ellos una conclusión que no se
+sigue. Por eso la fidelidad es una variable a medir y no una propiedad garantizada
+por el diseño.
+\end{advertencia}
+
+\subsection{Confianza, calibración y confianza apropiada}
+\label{sec:teo-confianza}
+
+Tres constructos distintos se confunden con frecuencia bajo la palabra
+\enquote{confianza}. Esta investigación los mantiene separados.
+
+\begin{description}[style=nextline,leftmargin=0.8cm]
+  \item[Similitud] Medida de cercanía entre representaciones vectoriales de dos
+        textos \parencite{reimers2019sentencebert}. Indica proximidad temática. No es
+        una probabilidad ni indica corrección.
+  \item[Confianza estimada] Puntaje que el sistema asigna a su propia salida. Puede
+        construirse de muchas maneras, incluidas combinaciones heurísticas de
+        señales. Un puntaje normalizado al intervalo $[0,1]$ no es por ello una
+        probabilidad.
+  \item[Calibración] Correspondencia estadística entre la confianza estimada y la
+        frecuencia observada de acierto. Es una propiedad \emph{demostrable} y
+        \emph{medible}, no una característica de diseño: exige comparar confianza y
+        corrección sobre un conjunto independiente con etiquetas verdaderas
+        \parencite{guo2017calibration}.
+  \item[Confianza apropiada] Propiedad de la relación entre la persona y el sistema:
+        que el usuario confíe cuando el sistema acierta y desconfíe cuando falla
+        \parencite{mehrotra2024systematic}. No equivale a aceptación ni a
+        dependencia.
+\end{description}
+
+La relación entre los cuatro constructos no es de grado sino de naturaleza. El
+hallazgo de \textcite{guo2017calibration} de que exactitud y calibración no se
+optimizan con los mismos parámetros implica que un sistema puede mejorar su detección
+y empeorar simultáneamente la calidad de sus señales de confianza. Y el de
+\textcite{mehrotra2024systematic}, que un puntaje mal calibrado puede inducir
+confianza inapropiada, implica que exhibir un puntaje no es neutro: puede empeorar la
+decisión del docente.
+
+\subsection{Retroalimentación humana como adaptación contextual}
+\label{sec:teo-feedback}
+
+La incorporación de decisiones previas del docente al comportamiento futuro del
+sistema se apoya en la estrategia de \textbf{memoria de retroalimentación} descrita
+por \textcite{fernandes2023bridging}: almacenar las decisiones de sesiones anteriores
+y, ante una entrada nueva, recuperar las correspondientes a entradas similares para
+condicionar la generación. Es una adaptación en tiempo de inferencia: no modifica los
+parámetros del modelo.
+
+Esta precisión terminológica importa. Lo que el sistema hace \textbf{no es
+aprendizaje} en el sentido de ajuste de parámetros, y describirlo como tal sería
+incorrecto. Es recuperación de precedentes. Los riesgos que \textcite{fernandes2023bridging}
+documentan para la recolección de retroalimentación --- desacuerdo entre expertos,
+sesgo de anclaje, sesgo de positividad, retroalimentación contradictoria --- se
+aplican íntegramente a un repositorio de decisiones docentes y constituyen amenazas a
+la validez del experimento correspondiente.
+
+\subsection{Procedencia y delegación de autoridad}
+\label{sec:teo-procedencia}
+
+El modelo de procedencia del \textcite{moreau2013provdm} aporta dos elementos.
+
+El primero es una \textbf{restricción sobre lo que un registro permite afirmar}: la
+derivación no se infiere de la coocurrencia. Que una actividad haya usado una entidad
+y generado otra no establece que la segunda derive de la primera. Trasladado a este
+proyecto: registrar que el sistema consultó unos fragmentos y produjo una sugerencia
+no demuestra que la sugerencia se apoye en ellos. La trazabilidad que puede afirmarse
+es la del proceso, no la del fundamento; esta última debe medirse.
+
+El segundo es la noción de \textbf{delegación}: un agente actúa en nombre de otro que
+conserva la responsabilidad por el resultado. Formaliza con precisión la relación que
+este proyecto sostiene entre el sistema y el docente, y da forma registrable a la
+cadena propuesta $\rightarrow$ evidencia $\rightarrow$ decisión $\rightarrow$
+responsable.
+
+\subsection{Agencia humana como restricción, no como característica}
+\label{sec:teo-agencia}
+
+La posición de que la decisión permanece en el docente no es una preferencia de
+diseño de este proyecto: es un requisito derivado de dos marcos normativos. El
+\textcite{nist2023airmf} exige documentar los procesos de supervisión humana y los
+límites de conocimiento del sistema, y recomienda recoger datos sobre la frecuencia y
+las razones con que las personas anulan las salidas de la IA. La guía de
+\textcite{miao2023guidance} establece que no debe cederse la responsabilidad humana
+en decisiones de alto impacto y que el diseñador humano debe verificar el
+conocimiento factual de lo que la IA sugiera.
+
+La consecuencia metodológica es que los motivos de rechazo dejan de ser un registro
+operativo del sistema y se convierten en \textbf{dato de investigación}.
+
+\subsection{Design Science Research como teoría del método}
+\label{sec:teo-dsr}
+
+El marco metodológico se toma de \textcite{hevner2004design} y
+\textcite{peffers2007design}. Del primero, la exigencia de que la contribución sea
+identificable respecto de la base de conocimiento y el repertorio de métodos de
+evaluación del artefacto. Del segundo, la admisión explícita de puntos de entrada
+distintos al ciclo, entre ellos el centrado en diseño y desarrollo, y el carácter
+iterativo y no rígido del proceso.
+
+La advertencia de \textcite{hevner2004design} sobre el carácter perecedero de la
+investigación en diseño --- los avances tecnológicos pueden dejarla obsoleta con
+rapidez --- se traduce en una decisión concreta de este proyecto: las contribuciones
+que se persiguen son el \emph{protocolo}, el \emph{benchmark} anotado y el
+\emph{conocimiento sobre qué componentes explican el comportamiento}, artefactos
+menos perecederos que una implementación concreta atada a versiones de modelos.

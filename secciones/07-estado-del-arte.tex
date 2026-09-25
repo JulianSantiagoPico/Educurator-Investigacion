@@ -1,0 +1,374 @@
+% =====================================================================
+%  6. Estado del arte
+% =====================================================================
+\section{Estado del arte}
+\label{sec:estado-arte}
+
+El estado del arte se organiza en ocho líneas. Cada línea responde a una pregunta
+orientadora y agrupa las fuentes que la sustentan, de modo que una fuente nueva se
+incorpore a una línea existente en lugar de generar una sección adicional.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Líneas de investigación y pregunta orientadora de cada una}
+\label{tab:lineas}
+\begin{tabularx}{\textwidth}{@{}c L{4.2cm} X@{}}
+\toprule
+\textbf{Línea} & \textbf{Ámbito} & \textbf{Pregunta orientadora} \\
+\midrule
+A & Calidad y curación de recursos educativos &
+¿Qué significa que un recurso educativo sea de calidad y cómo se evalúa de forma
+sistemática? \\
+B & Problema educativo y carga docente &
+¿Existe una necesidad demostrable de apoyo a la gestión de documentación académica? \\
+C & Inferencia, contradicción y verificación documental &
+¿Cómo se detectan contradicciones y se verifican afirmaciones contra evidencia? \\
+D & Recuperación, \emph{embeddings} y RAG &
+¿Cómo debe recuperarse la evidencia que alimenta al sistema? \\
+D$'$ & Evaluación de sistemas RAG &
+¿Con qué métricas se diagnostica un sistema RAG y qué tan fiables son? \\
+E & Agentes, herramientas y seguridad &
+¿Qué aporta un agente con herramientas y cómo se evalúa su comportamiento? \\
+F & Confianza, factualidad y calibración &
+¿Puede el sistema estimar cuándo su propia salida es confiable? \\
+G & Supervisión humana, retroalimentación y trazabilidad &
+¿Cómo mantener la autoridad humana y aprovechar la retroalimentación? \\
+H & Metodología y evaluación con usuarios &
+¿Cómo evaluar con rigor un artefacto y su interacción con personas? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Líneas A y B: calidad, curación y carga docente}
+\label{sec:arte-ab}
+
+El contenido sustantivo de estas dos líneas se expuso en las
+secciones~\ref{sec:contexto-carga} a \ref{sec:contexto-aied}, por ser el fundamento
+del planteamiento del problema. Se retoman aquí los tres resultados que condicionan
+el diseño de la investigación:
+
+\begin{enumerate}
+  \item La exactitud del contenido es la dimensión dominante de la calidad de un
+        recurso educativo \parencite{leacock2007framework}, y los errores de los
+        materiales se reproducen en la comprensión de los estudiantes.
+  \item Ni la evaluación automática ni la revisión humana bastan por separado: la
+        primera cubre la forma \parencite{clements2015open,tabares2017modelo}, la
+        segunda subdetecta defectos \parencite{xie2018systematic}.
+  \item La IA generativa redistribuye la carga docente más de lo que la reduce
+        \parencite{su2026efficiency}, por lo que medir solo tiempo subestima la
+        intensificación.
+\end{enumerate}
+
+A estos tres resultados se añade una asimetría de atención que la orientación de
+política de \textcite{miao2021aieducation} documenta con claridad: las aplicaciones
+de IA orientadas al docente han recibido mucho menos desarrollo que las orientadas al
+estudiante, y las que existen se concentran en automatizar evaluación, detección de
+plagio y tareas administrativas \parencite[p.~18]{miao2021aieducation}. El documento
+advierte además que la eficacia aparente de muchas herramientas puede deberse más a
+su novedad que a su sustancia, y que falta investigación acumulativa y replicable
+sobre su impacto \parencite[p.~26]{miao2021aieducation} --- la misma observación sobre
+el efecto novedad que \textcite{zawacki2019systematic} hacen desde la revisión de
+literatura primaria.
+
+\begin{advertencia}
+\textcite{miao2021aieducation} es un documento de política anterior a la IA
+generativa, sin evidencia empírica propia. En la matriz bibliográfica figuraba como
+Holmes, Bialik y Fadel (2019); el documento efectivamente disponible y leído es este,
+y la matriz debe corregirse en consecuencia.
+\end{advertencia}
+
+Queda por añadir una advertencia sobre el uso de la IA como apoyo cognitivo.
+\textcite{atchley2024human} sostienen que la descarga cognitiva en herramientas de IA
+tiene costos --- peor desempeño posterior sin la herramienta, confianza inapropiada
+en el propio conocimiento, mayor vulnerabilidad a la información falsa --- y que las
+personas no suelen percibirlos. Citan además un dato sobre fabricación de referencias
+que ilustra el riesgo de aceptar salidas sin verificación.
+
+\begin{advertencia}
+\textcite{atchley2024human} es un ensayo de perspectiva sin datos propios; su
+prioridad en la matriz bibliográfica debe bajarse de Núcleo a Apoyo. Se usa aquí como
+articulación de un riesgo, no como evidencia de que ese riesgo se materialice en el
+contexto de la curación docente.
+\end{advertencia}
+
+\subsection{Línea C: inferencia, contradicción y verificación documental}
+\label{sec:arte-c}
+
+Esta línea aporta la estructura formal de la tarea de detección y, sobre todo, la
+medida de su dificultad.
+
+\paragraph{La contradicción es la clase difícil.}
+En inferencia a nivel documental sobre contratos,
+\textcite{koreeda2021contractnli} reportan un $F_1$ de contradicción de 0,357 con
+BERT-large frente a 0,834 en implicación, y de 0,405 con el mejor modelo evaluado. Con
+evidencia provista por un oráculo, el $F_1$ de contradicción asciende a 0,62--0,66:
+la recuperación de la evidencia correcta condiciona el resultado más que el
+clasificador. Los autores identifican además dos fenómenos que degradan la exactitud:
+la negación por excepción --- presente de forma local en el 12\,\% de los pares y de
+forma no local, a veces a páginas de distancia, en el 7\,\% --- y la evidencia
+discontinua, presente en el 28\,\% de los pares.
+
+\paragraph{La clase neutral es la peor reconocida.}
+\textcite{gubelmann2024capturing} muestran que los modelos entrenados con los
+conjuntos dominantes, orientados a validez deductiva, tratan como neutral lo que es
+inductivamente válido, con la consiguiente caída de \emph{recall} en textos
+argumentativos reales. En su evaluación con silogismos,
+\textbf{ningún modelo reconoció las relaciones neutrales con más del 25\,\% de
+exactitud}, por debajo del 33\,\% que daría el azar; y con un desbalance realista ---
+la mayoría de los pares de oraciones sin relación --- un modelo colapsó al 1\,\% de
+exactitud por atribuir relaciones inexistentes. Añaden un hallazgo contraintuitivo:
+los modelos más grandes no son necesariamente mejores en tareas lógicas.
+
+\paragraph{Qué métricas de consistencia funcionan.}
+\textcite{honovich2022true} metaevaluaron métricas de consistencia factual sobre once
+conjuntos de datos estandarizados a etiquetas binarias. Los métodos basados en
+inferencia y en generación y respuesta de preguntas resultaron los mejores --- AUC
+promedio de 81,5 y 81,4 y 80,7 respectivamente --- frente a 72,2 del siguiente y un
+desempeño pobre de las métricas de n-gramas. Tres advertencias de ese trabajo son
+directamente aplicables aquí: todas las métricas se degradan con textos fuente de más
+de 200 \emph{tokens}; promediar la consistencia por partes permite que un texto
+mayormente correcto con un error pequeño reciba una puntuación alta; y entre los
+ejemplos más difíciles, 35 de 80 correspondían a etiquetas humanas equivocadas.
+
+\paragraph{La granularidad importa.}
+\textcite{min2023factscore} descomponen el texto generado en hechos atómicos y
+verifican cada uno contra evidencia. Su justificación es empírica: en el 40\,\% de los
+casos una sola oración mezcla información respaldada y no respaldada, por lo que
+evaluar por oración o por texto completo es insuficiente. Reportan además que la
+precisión factual cae con entidades poco frecuentes y con los hechos mencionados más
+tarde en el texto, y que su estimador automático aproxima la anotación humana con
+menos de 2\,\% de error cuando dispone de recuperación de evidencia.
+
+\subsection{Línea D: recuperación, \emph{embeddings} y generación aumentada}
+\label{sec:arte-d}
+
+\paragraph{No hay un recuperador universalmente superior.}
+\textcite{karpukhin2020dense} documentan una ventaja de 9 a 19 puntos absolutos en
+exactitud top-20 de la recuperación densa sobre BM25, con la excepción de conjuntos
+donde la coincidencia léxica es alta. Señalan que ambos recuperan pasajes
+cualitativamente distintos --- BM25 es sensible a palabras clave muy selectivas, la
+recuperación densa capta variaciones léxicas y relaciones semánticas --- y que la
+combinación de ambos mejora los resultados en algunos casos. El propio trabajo
+fundacional de RAG lo confirma en sentido inverso: en FEVER, BM25 funcionó mejor que
+el recuperador denso, posiblemente porque las afirmaciones se centran en entidades
+\parencite[p.~7]{lewis2020retrieval}.
+
+\paragraph{No hay un \emph{embedding} universal.}
+\textcite{muennighoff2023mteb} concluyen que ningún modelo domina en todas las tareas
+de su banco de pruebas y que existen dos familias con comportamientos distintos: los
+orientados a recuperación asimétrica --- consulta corta contra documento --- y los
+orientados a similitud simétrica entre textos comparables. Los modelos ajustados a
+similitud textual rinden mal en recuperación y viceversa, y el desempeño cae en
+idiomas no vistos durante el preentrenamiento. \textcite{reimers2019sentencebert}
+aportan la base de la familia simétrica y un dato de eficiencia relevante para
+detectar redundancia en un corpus: encontrar el par más similar entre diez mil
+oraciones pasa de unas 65 horas con un \emph{cross-encoder} a unos 5 segundos con
+\emph{embeddings} de oración.
+
+\begin{advertencia}
+Las tareas de recuperación de MTEB son exclusivamente en inglés
+\parencite{muennighoff2023mteb}. La selección de un modelo de \emph{embeddings} para
+un corpus en español no puede justificarse citando su posición en ese banco de
+pruebas: requiere validación propia.
+\end{advertencia}
+
+\paragraph{Qué aporta y qué no aporta el patrón RAG.}
+\textcite{lewis2020retrieval} documentan que evaluadores humanos juzgaron más factual
+a su sistema que a la alternativa sin recuperación en el 42,7\,\% de los casos, frente
+al 7,1\,\% en sentido contrario, y que el conocimiento se actualiza intercambiando el
+índice documental sin reentrenar. Pero los propios autores acotan el alcance al
+advertir que la fuente de conocimiento externa difícilmente será alguna vez
+completamente factual y libre de sesgos \parencite[p.~10]{lewis2020retrieval}, y el
+trabajo \textbf{no aborda qué ocurre cuando la fuente se contradice internamente}, que
+es precisamente el caso de esta investigación.
+
+\textcite{gao2024retrieval} sistematizan los desafíos: recuperación con baja precisión
+o \emph{recall}, redundancia al recuperar información similar de varias fuentes,
+incoherencia al integrar fragmentos, y el compromiso de la fragmentación --- bloques
+grandes aportan contexto y ruido, bloques pequeños lo contrario. Registran además dos
+elementos que este proyecto adopta: el uso de metadatos (archivo, página, fecha) para
+filtrar y construir recuperación sensible al tiempo, y la observación de que la
+recuperación mantiene el proceso observable al permitir que el usuario localice la
+referencia original, frente a un contexto largo sin recuperación que opera como caja
+negra.
+
+\subsection{Línea D$'$: evaluación de sistemas RAG}
+\label{sec:arte-dprima}
+
+Tres marcos de evaluación compiten en este espacio y sus límites son conocidos.
+
+\textcite{es2024ragas} proponen una evaluación sin referencia basada en descomponer la
+respuesta en afirmaciones y verificarlas una a una. Reportan concordancia con
+anotación humana de 0,95 en fidelidad, 0,78 en relevancia de la respuesta y 0,70 en
+relevancia del contexto, y señalan que la relevancia del contexto es la dimensión más
+difícil, sobre todo en contextos largos.
+
+\textcite{saadfalcon2024ares} entrenan jueces ligeros y aplican inferencia
+potenciada por predicción para acotar la estimación con intervalos de confianza:
+estiman la tasa de alucinación con un error de 2,5 puntos usando 200 anotaciones, un
+78\,\% menos que un enfoque basado solo en anotación humana.
+
+\textcite{ru2024ragchecker} reportan mejor correlación con el juicio humano que los
+marcos anteriores --- correlación de Pearson de 61,93 frente a 48,31 del mejor
+comparador en la valoración global --- aunque todavía por debajo de la correlación
+entre anotadores humanos. Sus hallazgos de diagnóstico son los más útiles para el
+diseño del sistema: el recuperador importa en todas las configuraciones; un contexto
+más informativo aumenta la fidelidad y reduce la alucinación; pero al aumentar el
+\emph{recall} del recuperador los generadores se vuelven más sensibles al ruido
+contenido en los propios fragmentos relevantes. Describen el resultado como un
+trilema entre utilización del contexto, sensibilidad al ruido y fidelidad.
+
+\begin{advertencia}
+Los jueces automáticos de ARES se generalizan a cambios moderados de dominio pero
+fallan ante cambios drásticos: al pasar del inglés a otros idiomas, incluido el
+español, la $\tau$ de Kendall cae a 0,33 \parencite[p.~8]{saadfalcon2024ares}. Ninguno
+de los tres marcos puede adoptarse para un corpus en español sin validar antes sus
+jueces contra anotación humana propia.
+\end{advertencia}
+
+\subsection{Línea E: agentes, herramientas y seguridad}
+\label{sec:arte-e}
+
+\paragraph{Qué aporta el patrón de razonamiento y acción.}
+\textcite{yao2023react} reportan en verificación de hechos 60,9\,\% de exactitud
+frente a 56,3\,\% del razonamiento encadenado, y hasta 64,6\,\% al combinar ambos. Más
+relevante que la diferencia de exactitud es el análisis de errores: en el razonamiento
+sin herramientas la alucinación es el principal modo de fallo (56\,\% de los errores),
+mientras que las trayectorias con acciones resultan más ancladas en evidencia. Los
+modos de fallo propios del patrón --- bucles de razonamiento en el 47\,\% de los casos
+analizados y búsquedas no informativas en el 23\,\% --- definen qué debe instrumentarse
+y medirse.
+
+\paragraph{Cómo se evalúa un agente.}
+\textcite{mohammadi2025evaluation} proponen una evaluación holística: completar la
+tarea no basta si la salida es de mala calidad, lenta, costosa, inconsistente o
+insegura. Distinguen tres métodos de cálculo --- basado en código, juez automático y
+evaluación humana --- con compromisos explícitos entre reproducibilidad, escalabilidad
+y validez, y subrayan que, por el carácter estocástico de los agentes, la misma tarea
+debe repetirse varias veces para estimar consistencia.
+
+\paragraph{Por qué el juez automático no puede asumirse válido.}
+\textcite{thakur2025judging} evaluaron jueces automáticos contra anotación humana. Solo
+los modelos mayores lograron buena alineación y aun así quedaron por debajo del acuerdo
+entre humanos --- el mejor, ocho puntos por debajo. Su advertencia metodológica es
+precisa: el porcentaje de acuerdo engaña, porque jueces con más del 90\,\% de acuerdo
+pueden desviarse más de diez puntos de la puntuación humana, por lo que debe
+reportarse un coeficiente corregido por azar. Documentan además un sesgo de indulgencia
+--- los jueces tienden a marcar \enquote{correcto} cuando dudan --- y casos en que
+aceptan respuestas trampa.
+
+\paragraph{La superficie de ataque.}
+\textcite{zhan2024injecagent} miden la vulnerabilidad de agentes con herramientas a
+instrucciones inyectadas en el contenido que procesan: 24\,\% en el escenario base y
+47\,\% con refuerzo del ataque para el modelo más capaz evaluado. Dos hallazgos
+condicionan el diseño de un sistema que ingiere documentos de terceros: los campos con
+alta libertad de contenido son los más vulnerables, y los agentes ejecutaron acciones
+dañinas incluso cuando el \emph{prompt} exigía comportamiento seguro.
+
+\subsection{Línea F: confianza, factualidad y calibración}
+\label{sec:arte-f}
+
+\paragraph{Un puntaje no es una probabilidad.}
+\textcite{guo2017calibration} establecen que las redes neuronales modernas están
+sistemáticamente descalibradas y tienden a la sobreconfianza, con error de calibración
+esperado típicamente entre 4\,\% y 10\,\%. Dos consecuencias importan aquí: exactitud y
+calibración no se optimizan con los mismos parámetros --- un modelo puede mejorar su
+exactitud empeorando sus probabilidades ---, y todo método de calibración requiere un
+conjunto de validación separado con etiquetas verdaderas. El escalamiento por
+temperatura, el método más simple, no cambia la predicción ni la exactitud: solo la
+confianza reportada.
+
+\paragraph{La transparencia no garantiza confianza apropiada.}
+\textcite{mehrotra2024systematic} revisan sistemáticamente las intervenciones para
+fomentar confianza apropiada en la interacción humano-IA. El método más común es
+aumentar la transparencia --- alrededor del 52\,\% de los estudios --- mediante
+explicaciones, puntajes de confianza y comunicación de incertidumbre, pero los
+resultados son mixtos: las explicaciones pueden aumentar la aceptación de la
+recomendación con independencia de que sea correcta, y los puntajes de confianza mal
+calibrados pueden inducir confianza inapropiada. Señalan además que solo el 14\,\% de
+los estudios considera el continuo completo de sobre, sub y desconfianza, y que la
+dependencia se usa con frecuencia como sustituto de la confianza sin justificarlo.
+
+\paragraph{Qué tipo de alucinación se mide.}
+\textcite{huang2025survey} distinguen alucinación de factualidad de alucinación de
+fidelidad y documentan que la recuperación aumentada no la elimina. Sus dos familias
+de causas --- fallas de recuperación, entre ellas las fuentes con información
+incorrecta o desactualizada, y cuello de botella de generación, que incluye el
+contexto ruidoso, los conflictos de conocimiento y el fenómeno de pérdida de la
+información intermedia --- se traducen directamente en las variables de ablación de
+la Parte~V.
+
+\subsection{Línea G: supervisión humana, retroalimentación y trazabilidad}
+\label{sec:arte-g}
+
+\paragraph{Retroalimentación sin reentrenamiento.}
+\textcite{fernandes2023bridging} sistematizan las formas de integrar retroalimentación
+humana en generación de lenguaje natural. Dos de sus estrategias operan en inferencia,
+sin modificar los parámetros del modelo: la \textbf{memoria de retroalimentación} ---
+almacenar decisiones previas y recuperar las correspondientes a entradas similares
+para guiar la generación --- y el refinamiento iterativo. Su conclusión general es que
+el valor reside en la retroalimentación misma más que en el método concreto para
+usarla. Documentan también los riesgos de la recolección: retroalimentación de baja
+calidad, contradictoria o adversarial, desacuerdo entre expertos, sesgo de anclaje y
+sesgo de positividad; y advierten que con menos de mil comparaciones la mejora es
+escasa.
+
+\paragraph{Qué permite afirmar un registro de procedencia.}
+El modelo de datos de procedencia del \textcite{moreau2013provdm} define entidades,
+actividades y agentes y establece una restricción que este proyecto debe respetar al
+formular sus afirmaciones de trazabilidad: \textbf{la derivación no se infiere
+automáticamente}. Que una actividad use una entidad A y genere una entidad B no
+implica que B derive de A; debe existir influencia real. El modelo incorpora además la
+noción de delegación --- un agente actúa en nombre de otro que conserva la
+responsabilidad ---, que formaliza con precisión la relación entre el sistema que
+propone y el docente que decide.
+
+\paragraph{Qué exige la gobernanza.}
+El marco de gestión de riesgos del \textcite{nist2023airmf} sitúa validez y
+fiabilidad como base de las demás características de una IA confiable y distingue
+transparencia --- qué ocurrió ---, explicabilidad --- cómo se decidió --- e
+interpretabilidad --- qué significa para el usuario. Sus subcategorías se traducen en
+obligaciones concretas de documentación y medición, detalladas en
+§\ref{sec:just-normativa}. La guía de \textcite{miao2023guidance} añade el requisito
+de validación ética y pedagógica previa a la adopción institucional y la exigencia de
+que el diseñador humano verifique el conocimiento factual de lo que la IA sugiera.
+
+\subsection{Línea H: metodología y evaluación con usuarios}
+\label{sec:arte-h}
+
+\paragraph{El artefacto no es la contribución.}
+\textcite{hevner2004design} formulan la distinción que gobierna este documento: lo que
+separa construir un sistema de hacer investigación en ciencia del diseño es la
+contribución identificable a la base de conocimiento \parencite[p.~81]{hevner2004design}.
+Su tabla de métodos de evaluación --- observacionales, analíticos,
+experimentales, de prueba y descriptivos --- provee el repertorio del que la Parte~V
+selecciona. Advierten que cuando el artefacto forma parte de un sistema
+humano-máquina se requieren teorías y métodos del comportamiento para evaluarlo, y que
+la investigación en diseño es perecedera: los avances tecnológicos pueden dejarla
+obsoleta con rapidez.
+
+\paragraph{Puntos de entrada al ciclo de investigación.}
+\textcite{peffers2007design} establecen que el proceso es nominalmente secuencial pero
+no rígido y admiten explícitamente distintos puntos de entrada, entre ellos el
+centrado en diseño y desarrollo. Advierten contra su uso como ortodoxia rígida. Es la
+base sobre la que este proyecto sostiene que tener el artefacto construido antes de
+formalizar la evaluación no constituye un defecto metodológico.
+
+\paragraph{Instrumento de carga percibida.}
+\textcite{hart1988development} desarrollaron una medida multidimensional de carga de
+trabajo cuyas seis subescalas explican entre el 78\,\% y el 90\,\% de la varianza de la
+calificación global, con fiabilidad test--retest de 0,83. Dos propiedades la hacen
+adecuada para el estudio con docentes: los pesos específicos de la tarea hacen la
+puntuación más sensible a las manipulaciones experimentales que una calificación
+global única, y su aplicación toma menos de un minuto para las seis calificaciones.
+Los pesos son además diagnósticos: identifican cuál es la fuente principal de carga.
+
+\begin{estado}
+\small
+\textbf{Síntesis de la línea H.} El repertorio metodológico existe y está
+consolidado. Lo que la revisión de \textcite{bond2024meta} documenta es que el campo
+de la IA en educación superior lo aplica de forma irregular. La contribución
+metodológica que este proyecto puede hacer no es inventar un método, sino aplicar con
+rigor uno disponible a un problema donde la evidencia es escasa.
+\end{estado}

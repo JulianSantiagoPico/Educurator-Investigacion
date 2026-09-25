@@ -1,0 +1,199 @@
+% =====================================================================
+%  8. Marco conceptual
+% =====================================================================
+\section{Marco conceptual}
+\label{sec:marco-conceptual}
+
+Las definiciones de esta sección son \textbf{operacionales}: fijan el sentido en que
+cada término se usa en el resto del documento y, cuando corresponde, cómo se mide.
+Un término que no pueda definirse de forma que permita decidir si algo cae o no bajo
+él, no se usa.
+
+\subsection{Términos del dominio}
+\label{sec:conc-dominio}
+
+\begin{xltabular}{\textwidth}{@{}L{3.6cm} X@{}}
+\toprule
+\textbf{Término} & \textbf{Definición operacional} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Término} & \textbf{Definición operacional} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\textbf{Corpus de curso} &
+Conjunto cerrado y conocido de documentos asociados a una asignatura, cargados por
+el docente responsable. Es la referencia contra la cual se define la corrección. \\
+
+\textbf{Documento} &
+Unidad de archivo cargada al sistema, con metadatos de origen, fecha y categoría. \\
+
+\textbf{Fragmento} &
+Porción de un documento resultante de la segmentación, identificada de forma única y
+localizable en su documento de origen. Es la unidad mínima de evidencia. \\
+
+\textbf{Curación} &
+Proceso de seleccionar, comparar, depurar, actualizar y organizar el corpus. Esta
+investigación aborda su fase \emph{detectable} (identificar relaciones problemáticas)
+y deja fuera su fase \emph{deliberativa} (decidir qué se conserva). \\
+
+\textbf{Defecto} &
+Relación problemática entre dos o más fragmentos del corpus, de una de las clases
+definidas en §\ref{sec:conc-defectos}. La unidad no es el fragmento sino la relación. \\
+
+\textbf{Sugerencia} &
+Propuesta generada por el sistema sobre un defecto detectado, en estado pendiente,
+acompañada de los identificadores de los fragmentos que la sustentan. \\
+
+\textbf{Decisión} &
+Acto del docente sobre una sugerencia: aceptar, modificar o rechazar. Queda
+registrada con su autor, su momento y, en caso de rechazo, su motivo. \\
+
+\textbf{Publicación} &
+Incorporación efectiva de un cambio al corpus. Por restricción arquitectónica,
+requiere una decisión de aceptación previa. \\
+\end{xltabular}
+
+\subsection{Clases de defecto}
+\label{sec:conc-defectos}
+
+La taxonomía se deriva de la literatura y no de la implementación: cada clase remite
+a un fundamento y admite una definición que permite anotar el \emph{ground truth}.
+
+\begin{xltabular}{\textwidth}{@{}L{3.2cm} X L{3cm}@{}}
+\toprule
+\textbf{Clase} & \textbf{Definición operacional} & \textbf{Fundamento} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Clase} & \textbf{Definición operacional} & \textbf{Fundamento} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\textbf{Contradicción} &
+Dos fragmentos del corpus afirman proposiciones incompatibles: un valor numérico, una
+definición, un procedimiento, un plazo o un criterio. &
+\textcite{koreeda2021contractnli}, \textcite{thorne2018fever} \\
+
+\textbf{Redundancia} &
+Dos fragmentos expresan el mismo contenido con redacciones distintas, sin que ninguno
+contradiga al otro. &
+\textcite{gao2024retrieval}, \textcite{reimers2019sentencebert} \\
+
+\textbf{Desactualización} &
+Un fragmento afirma algo que otro más reciente sustituye, o contiene información
+específica de una instancia pasada (fechas, cupos, nombres). &
+\textcite{leacock2007framework}, \textcite{gao2024retrieval} \\
+
+\textbf{Sin evidencia} &
+No existe en el corpus material suficiente para decidir el estatus de una afirmación.
+Es un resultado, no una ausencia de resultado. &
+\textcite{thorne2018fever}, \textcite{gubelmann2024capturing} \\
+
+\textbf{Control negativo} &
+Par de fragmentos temáticamente próximos y no problemáticos, incluido
+deliberadamente para estimar la tasa de falsos positivos. &
+\textcite{gubelmann2024capturing} \\
+\end{xltabular}
+
+\begin{advertencia}
+La inclusión de controles negativos no es opcional.
+\textcite{gubelmann2024capturing} muestran que, con un desbalance realista donde la
+mayoría de los pares no guarda relación, un modelo puede colapsar al atribuir
+relaciones inexistentes. Un benchmark compuesto solo por defectos plantados mide
+\emph{recall} y no dice nada sobre precisión en condiciones de uso.
+\end{advertencia}
+
+\subsection{Términos de evaluación}
+\label{sec:conc-evaluacion}
+
+\begin{xltabular}{\textwidth}{@{}L{3.6cm} X@{}}
+\toprule
+\textbf{Término} & \textbf{Definición operacional} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Término} & \textbf{Definición operacional} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\textbf{Verdad de referencia} &
+Etiqueta asignada por anotadores humanos a cada instancia del benchmark, con la
+evidencia esperada asociada y el acuerdo entre anotadores reportado. \\
+
+\textbf{Detección correcta} &
+Coincidencia simultánea de la clase asignada y de la evidencia citada con las de la
+verdad de referencia, según el criterio de correspondencia definido en la Parte~V.
+Acertar la clase con evidencia equivocada no cuenta como detección correcta
+\parencite{thorne2018fever}. \\
+
+\textbf{Fidelidad} &
+Proporción de afirmaciones de una salida que están sustentadas por la evidencia
+citada \parencite{es2024ragas,min2023factscore}. Se evalúa por afirmación atómica, no
+por respuesta completa. \\
+
+\textbf{Relevancia del contexto} &
+Proporción de los fragmentos recuperados que son pertinentes para la consulta
+\parencite{saadfalcon2024ares}. \\
+
+\textbf{Error de calibración} &
+Discrepancia agregada entre la confianza estimada y la frecuencia observada de
+acierto, medida sobre un conjunto independiente
+\parencite{guo2017calibration}. \\
+
+\textbf{Configuración de comparación} &
+Variante del sistema con componentes deshabilitados o sustituidos, usada para atribuir
+el desempeño a componentes identificables. \\
+
+\textbf{Juez automático} &
+Modelo empleado para evaluar salidas. Su validez no se asume: se establece
+comparándolo con anotación humana mediante un coeficiente corregido por azar
+\parencite{thakur2025judging}. \\
+\end{xltabular}
+
+\subsection{Distinciones que el documento mantiene}
+\label{sec:conc-distinciones}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Pares de términos que no deben usarse como equivalentes}
+\label{tab:distinciones}
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{3.4cm} X@{}}
+\toprule
+\textbf{No confundir} & \textbf{Con} & \textbf{Por qué} \\
+\midrule
+Similitud semántica & Confianza &
+La similitud indica proximidad temática entre textos; no informa sobre la corrección
+de una decisión \parencite{reimers2019sentencebert}. \\
+Confianza estimada & Calibración &
+Un puntaje normalizado no es una probabilidad. La calibración se demuestra contra la
+tasa de acierto en datos independientes \parencite{guo2017calibration}. \\
+Contradicción & Sin evidencia &
+Son clases distintas con dificultades distintas y consecuencias distintas para el
+docente \parencite{thorne2018fever,gubelmann2024capturing}. \\
+Alucinación de fidelidad & Alucinación de factualidad &
+La primera es inconsistencia con el contexto provisto; la segunda, con el mundo. Este
+proyecto mide la primera \parencite{huang2025survey}. \\
+Trazabilidad del proceso & Fundamentación de la salida &
+Registrar qué fragmentos se consultaron no demuestra que la salida se apoye en ellos
+\parencite{moreau2013provdm}. \\
+Aceptación de una sugerencia & Confianza apropiada &
+Aceptar puede reflejar sobredependencia. La dependencia se usa con frecuencia como
+sustituto de la confianza sin justificarlo \parencite{mehrotra2024systematic}. \\
+Recuperación de precedentes & Aprendizaje &
+La memoria de retroalimentación opera en inferencia y no modifica parámetros
+\parencite{fernandes2023bridging}. \\
+Capacidad técnica & Desempeño &
+Que el sistema ejecute una operación no informa sobre con qué exactitud la ejecuta
+\parencite{hevner2004design}. \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,133 @@
+% =====================================================================
+%  5. Antecedentes
+% =====================================================================
+\section{Antecedentes}
+\label{sec:antecedentes}
+
+Esta sección traza la trayectoria de los trabajos que preceden al problema, con un
+criterio: interesa qué se intentó, qué quedó resuelto y dónde se detuvo cada línea.
+El estado actual detallado de cada una se desarrolla en la sección~\ref{sec:estado-arte}.
+
+\subsection{Del instrumento de revisión al aseguramiento automatizado}
+\label{sec:ant-calidad}
+
+La preocupación por la calidad de los recursos educativos digitales produjo primero
+\textbf{instrumentos de revisión humana}. El
+\emph{Learning Object Review Instrument} \parencite{leacock2007framework} fijó nueve
+dimensiones evaluables por revisores formados, con un compromiso explícito entre
+validez y eficiencia: se diseñó para que un evaluador produjera una reseña útil en
+pocos minutos, agregable con la de otros bajo un modelo de participación convergente.
+
+La segunda etapa trasladó la pregunta del recurso individual al
+\textbf{repositorio}. \textcite{clements2015open} revisaron 82 artículos publicados
+entre 1994 y 2014 y construyeron un marco (LORQAF) que clasifica los enfoques de
+calidad según sean de política, tecnológicos o sociales. Su inventario de quince
+instrumentos específicos delimita con precisión hasta dónde llegaba la automatización
+en ese momento: pruebas automáticas de metadatos, verificación de enlaces, sistemas
+de recomendación y marcado colaborativo de problemas. Ningún instrumento verificaba
+el contenido.
+
+La tercera etapa intentó \textbf{integrar} las vías automática y humana.
+\textcite{tabares2017modelo} propusieron un modelo por capas --- gestión, revisión de
+expertos y percepción de usuarios --- aplicado a 46 objetos de la Federación de
+Repositorios de Objetos de Aprendizaje de Colombia. Su capa automática incorpora una
+métrica de coherencia basada en reglas y similitud de coseno entre campos de texto
+libre, con umbral de 0,7. Es el antecedente más cercano al uso de similitud semántica
+como señal de calidad en un contexto educativo, y también el que muestra su límite:
+la coherencia que mide es entre \emph{metadatos}, no entre los contenidos de
+documentos distintos.
+
+\begin{estado}
+\small
+\textbf{Dónde se detuvo esta línea.} Tres etapas, un mismo límite: lo automatizado
+cubre la forma (metadatos, enlaces, disponibilidad) y lo sustantivo queda en manos de
+revisores humanos. El problema de la consistencia \emph{entre} documentos de una
+misma colección no se aborda en ninguna de las tres.
+\end{estado}
+
+\subsection{De la verificación de hechos a la inferencia documental}
+\label{sec:ant-verificacion}
+
+En paralelo, el procesamiento de lenguaje natural construyó la maquinaria para
+decidir si una afirmación está respaldada por un texto. \textcite{thorne2018fever}
+formalizaron la tarea con FEVER, separando tres clases --- respaldado, refutado, sin
+información suficiente --- y adoptando un criterio de anotación conservador: sin
+evidencia explícita, la afirmación se etiqueta como \enquote{sin información
+suficiente} aunque el anotador crea saber la respuesta. Su mejor sistema alcanzó
+31,87\,\% de exactitud exigiendo que la evidencia recuperada fuera la correcta, frente
+a 50,91\,\% sin exigirla: el sistema acertaba la etiqueta con evidencia equivocada en
+una fracción considerable de los casos.
+
+Un hallazgo lateral de ese trabajo anticipa el problema de esta investigación: los
+autores encontraron \textbf{información inconsistente entre páginas de la propia
+fuente de referencia} --- Pakistán descrito con el 41.\textsuperscript{o} y el
+42.\textsuperscript{o} PIB en dos páginas distintas
+\parencite[p.~8]{thorne2018fever}. La inconsistencia intracorpus aparece allí como
+anomalía observada; aquí es el objeto de estudio.
+
+\textcite{koreeda2021contractnli} llevaron la tarea al nivel documental con
+contratos: hipótesis fijas evaluadas contra documentos largos, con identificación de
+la evidencia que las sustenta. Su resultado central para este proyecto es de
+dificultad: con BERT-large, el $F_1$ de la clase contradicción fue de 0,357 frente a
+0,834 en la clase de implicación. Con evidencia perfecta provista por un oráculo, ese
+$F_1$ sube a 0,62--0,66, lo que sitúa la recuperación de evidencia como el cuello de
+botella de la tarea.
+
+\subsection{De la recuperación léxica a la generación anclada en evidencia}
+\label{sec:ant-rag}
+
+La línea de recuperación de información llega a este proyecto por una vía indirecta.
+El marco probabilístico de relevancia y su función BM25 \parencite{robertson2009probabilistic}
+fijaron durante dos décadas el punto de comparación para cualquier sistema de
+recuperación textual. La recuperación densa de \textcite{karpukhin2020dense} mostró
+que representaciones aprendidas podían superarlo por 9 a 19 puntos absolutos en
+exactitud top-20, con una excepción instructiva: BM25 gana cuando la coincidencia
+léxica entre consulta y pasaje es alta.
+
+\textcite{lewis2020retrieval} combinaron recuperación y generación en una arquitectura
+única, con dos propiedades que este proyecto aprovecha directamente: el conocimiento
+se actualiza cambiando los documentos indexados sin reentrenar el modelo --- los
+autores lo demuestran intercambiando índices de 2016 y 2018 --- y la memoria de texto
+resultante es legible y editable por humanos. \textcite{gao2024retrieval} sistematizan
+después la evolución del patrón y formulan la advertencia que define el riesgo de
+aplicarlo aquí: la información errónea recuperada puede ser peor que la ausencia de
+información.
+
+\subsection{Del agente que razona al agente que debe ser evaluado}
+\label{sec:ant-agentes}
+
+\textcite{yao2023react} formalizaron la alternancia entre razonamiento y acción sobre
+herramientas externas, con dos resultados pertinentes: en verificación de hechos las
+trayectorias resultaron más ancladas en evidencia que las de razonamiento puro, y el
+proceso es inspeccionable --- un humano puede distinguir el conocimiento interno del
+externo y corregir el comportamiento editando los pasos de razonamiento. El mismo
+trabajo documenta sus modos de fallo: errores de razonamiento en el 47\,\% de los
+casos analizados, incluidos bucles, y búsquedas no informativas en el 23\,\%.
+
+Dos líneas posteriores acotan el entusiasmo. \textcite{mohammadi2025evaluation}
+argumentan que completar la tarea no basta como criterio y que, por ser los agentes
+estocásticos, la misma tarea debe repetirse varias veces para estimar su fiabilidad.
+\textcite{zhan2024injecagent} muestran que los agentes con herramientas son
+vulnerables a instrucciones inyectadas en el contenido que leen: GPT-4 con el patrón
+ReAct resultó vulnerable en el 24\,\% de los casos del escenario base y en el 47\,\%
+con un \emph{prompt} de refuerzo del ataque. El dato más relevante para un sistema que
+procesa documentos subidos por usuarios es que los campos con alta libertad de
+contenido son los más vulnerables, porque la instrucción maliciosa se mezcla con el
+texto normal.
+
+\subsection{Antecedente interno del proyecto}
+\label{sec:ant-interno}
+
+El proyecto cuenta con dos antecedentes propios. El primero es el documento
+\emph{EduCurator AI --- Curaduría asistida de contenidos educativos con supervisión
+docente} (V0), que estableció el problema, el marco tecnológico y una primera
+formulación metodológica, dejando marcados de forma explícita los puntos que
+requerían bibliografía real. El segundo es el MVP funcional, descrito en la
+Parte~IV, que implementa la arquitectura y permite ejecutar el flujo completo sobre
+un corpus.
+
+\begin{advertencia}
+La existencia del MVP es un antecedente de \emph{desarrollo}, no de
+\emph{investigación}. No aporta evidencia sobre el comportamiento del sistema: aporta
+la condición material que hace posible recogerla.
+\end{advertencia}
