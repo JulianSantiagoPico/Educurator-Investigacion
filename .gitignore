@@ -1,0 +1,27 @@
+# Archivos auxiliares y temporales de compilación de LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*.lof
+*.lot
+*.idx
+*.ind
+*.ilg
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Descomenta la línea de abajo si prefieres que el PDF final tampoco se suba a Git:
+# *.pdf
