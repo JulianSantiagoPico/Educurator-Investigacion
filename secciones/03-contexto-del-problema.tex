@@ -1,0 +1,144 @@
+% =====================================================================
+%  2. Contexto del problema
+% =====================================================================
+\section{Contexto del problema}
+\label{sec:contexto}
+
+El problema que aborda esta investigación se sitúa en la intersección de tres
+hechos documentados: la carga de trabajo docente y su composición real, la
+definición de calidad de un recurso educativo y los límites de lo que hoy se
+automatiza, y el estado de la investigación sobre IA en educación superior.
+
+\subsection{La carga docente y sus componentes invisibles}
+\label{sec:contexto-carga}
+
+La preparación y el mantenimiento de material de curso forman parte de un conjunto
+de actividades que los modelos institucionales de asignación de carga tienden a
+subestimar. \textcite{kenny2023life} validaron una herramienta holística de
+estimación de carga académica (AWET) con 39 académicos de 21 universidades
+australianas, contrastando la carga estimada con la asignada nominalmente. La carga
+promedio ponderada resultó del \textbf{132\,\% de una carga completa} (unas
+2252~horas anuales); 24 de los 39 participantes superaban el 110\,\% y 11 superaban
+el 150\,\%. Solo 3 tenían un perfil efectivamente equilibrado entre docencia,
+investigación y servicio, frente a 18 según su asignación nominal. Las actividades
+de coordinación, liderazgo, administración, supervisión y adaptación de la
+enseñanza en línea no estaban contempladas en los modelos institucionales.
+
+\begin{advertencia}
+\textcite{kenny2023life} no miden la carga específica de curar o mantener
+documentación de cursos, y su \enquote{validación} es cualitativa: no reportan
+indicadores psicométricos. La fuente sirve para argumentar que existe trabajo
+docente de apoyo sistemáticamente no contabilizado, \emph{no} para cuantificar el
+tiempo que un docente dedica a la curación.
+\end{advertencia}
+
+\subsection{La expectativa sobre la IA generativa y lo que la evidencia muestra}
+\label{sec:contexto-genai}
+
+La hipótesis implícita de que automatizar equivale a reducir trabajo no se sostiene
+con la evidencia disponible. La revisión sistemática de \textcite{su2026efficiency}
+--- 30 estudios empíricos, cribado doble con $\kappa = 0{,}845$ en título y resumen
+y $\kappa = 0{,}851$ en texto completo, calidad evaluada con MMAT~2018 ---
+documenta una redistribución: la IA generativa ahorra tiempo en preparación de
+materiales, borradores de retroalimentación y textos administrativos, pero añade
+revisión de la calidad de las salidas, verificación de hechos, juicio ético y
+monitoreo de integridad académica.
+
+Un hallazgo de esa revisión condiciona directamente el diseño de evaluación de este
+proyecto: las conclusiones de los estudios primarios dependen de \emph{cómo} midan
+la carga. Los que la operacionalizan como eficiencia (tiempo de tarea) tienden a
+encontrar reducción; los que la operacionalizan como intensificación (adaptación,
+supervisión, responsabilidad) tienden a encontrar aumento. Los autores advierten
+que \textcquote[p.~10]{su2026efficiency}{Future research that relies only
+on time-efficiency indicators may underestimate the invisible work intensification
+brought about by GenAI}. De ahí que la Parte~V contemple tiempo \emph{y} carga
+percibida como medidas complementarias, no intercambiables.
+
+\subsection{Qué significa que un recurso educativo tenga calidad}
+\label{sec:contexto-calidad}
+
+La calidad de un recurso educativo es multidimensional, pero la literatura converge
+en que la exactitud del contenido es la dimensión dominante. El
+\emph{Learning Object Review Instrument} (LORI~1.5), cuyos fundamentos expone
+\textcite{leacock2007framework}, define nueve dimensiones --- calidad del contenido,
+alineación con objetivos, retroalimentación y adaptación, motivación, diseño de la
+presentación, usabilidad, accesibilidad, reusabilidad y cumplimiento de estándares ---
+y sitúa la primera por encima de las demás:
+\textcquote[p.~45]{leacock2007framework}{A learning resource is of little
+or no use if it is well designed in all other respects but its content is inaccurate
+or misleading}. Los autores señalan además que los estudiantes desarrollan
+comprensiones incompletas que reproducen los errores de los materiales, y que la
+presencia de información específica de una instancia --- fechas de entrega, nombres
+del instructor --- degrada la reusabilidad de un recurso; ambos puntos anticipan dos
+de las clases de defecto que este proyecto busca detectar: la contradicción y la
+desactualización.
+
+El estudio de \textcite{xie2018systematic} sobre 1200 reseñas de recursos digitales
+elaboradas por docentes aporta un dato metodológicamente relevante: los revisores
+comentan con más frecuencia las virtudes que los defectos de un recurso. La revisión
+humana, por sí sola, tiende a subdetectar problemas. En sentido complementario,
+\textcite{tabares2017modelo}, al aplicar un modelo de evaluación por capas a 46
+objetos de aprendizaje de la Federación de Repositorios de Objetos de Aprendizaje de
+Colombia, documentan el caso inverso: un objeto con buenos indicadores automáticos
+--- basados en metadatos --- obtuvo valoraciones muy bajas de expertos y usuarios.
+Ninguna de las dos vías basta por separado.
+
+\begin{estado}
+\small
+\textbf{Lectura conjunta de las tres fuentes.} La evaluación automática detecta lo
+que es formalizable (completitud de metadatos, enlaces rotos, similitud entre
+textos); la revisión humana juzga la sustancia pero subdetecta defectos y no escala.
+La combinación de ambas es la posición que esta investigación adopta, y coincide con
+la recomendación de \textcite{clements2015open} tras revisar 82 artículos sobre
+repositorios educativos: \textcquote[p.~6]{clements2015open}{Expert review
+might be not the most economical approach, but it seems to be needed in order to
+evaluate the substance of the resources in the repository}.
+\end{estado}
+
+\subsection{Qué automatiza hoy el aseguramiento de calidad}
+\label{sec:contexto-automatizacion}
+
+La revisión de \textcite{clements2015open} identifica quince instrumentos
+específicos de aseguramiento de calidad en repositorios educativos: revisión por
+pares, calificaciones, herramientas tipo LORI, recomendadores, comentarios,
+etiquetado social, marcado de problemas (enlaces rotos, contenido inapropiado),
+especificación de autoría y licencias, redes de confianza y pruebas automáticas de
+metadatos. El alcance de lo automatizado en ese panorama se limita a
+\textbf{metadatos, enlaces y recomendaciones}: ningún instrumento verifica el
+contenido en sí. Los autores observan además que los instrumentos colaborativos
+dependen de una comunidad activa y que, en educación, la motivación para calificar y
+comentar es menor que en comercio electrónico --- una restricción que se agrava en
+el corpus de un curso individual, donde la comunidad es, en el límite, una persona.
+
+\subsection{El estado de la investigación sobre IA en educación superior}
+\label{sec:contexto-aied}
+
+Dos revisiones separadas por cinco años coinciden en dónde está y dónde no está la
+investigación. \textcite{zawacki2019systematic} mapearon 146 artículos sobre
+aplicaciones de IA en educación superior: solo 13 (8,9\,\%) tienen como primer autor
+a alguien de Educación, el 73,3\,\% emplea métodos cuantitativos --- sobre todo
+cuasiexperimentales, con estudios piloto que no controlan el efecto novedad ---, y
+solo 2 de 146 (1,4\,\%) reflexionan críticamente sobre implicaciones éticas. En su
+tipología, la curación de materiales aparece en 3 estudios y el apoyo al docente en
+el diseño de la enseñanza, en otros 3.
+
+\textcite{bond2024meta} confirman el patrón en una revisión terciaria de 66
+revisiones centradas en educación superior (cribado doble con $\kappa = 0{,}89$ y
+$\kappa = 0{,}85$): solo 5 revisiones (7,6\,\%) mencionan el uso de IA para evaluar
+materiales de aprendizaje --- y casi siempre midiendo tiempo de uso en plataforma,
+no el contenido ---, y la curación de materiales aparece en 3 (4,5\,\%). En cuanto a
+rigor, la puntuación media de calidad metodológica fue de 6,57 sobre 10 y
+\textcquote[p.~34]{bond2024meta}{A noticeable 65\% of reviews are
+critically low to medium quality}; el 51,5\,\% no reporta acuerdo entre revisores.
+Entre los desafíos más citados figura el \textbf{desplazamiento de la autoridad}
+hacia la IA (22,6\,\%), y entre los vacíos, la necesidad de mayor rigor y variedad
+metodológica (36,4\,\%) junto con el llamado a evaluar el efecto de las herramientas
+sobre el aprendizaje y las personas, y no solo su exactitud técnica.
+
+\begin{advertencia}
+Ninguna de estas dos revisiones evalúa la eficacia de herramienta alguna: son mapeos
+de literatura. Que la curación de materiales aparezca en pocas revisiones indica
+escasa \emph{síntesis} sobre el tema, no necesariamente escasa investigación
+primaria. La brecha que se formula en la Parte~II se apoya en esa evidencia con esa
+salvedad explícita.
+\end{advertencia}

@@ -1,0 +1,88 @@
+% =====================================================================
+%  Resumen ejecutivo / Abstract
+% =====================================================================
+\section*{Resumen}
+\addcontentsline{toc}{section}{Resumen}
+
+El material de apoyo de un curso universitario se acumula a lo largo de varios
+semestres hasta formar corpus en los que conviven versiones redundantes,
+afirmaciones contradictorias y contenidos desactualizados. Mantener la coherencia
+de ese corpus es una tarea de curación que recae sobre el docente y que la
+literatura sobre carga académica sitúa entre las actividades poco visibles en los
+modelos institucionales de asignación de trabajo \parencite{kenny2023life}. La
+incorporación de inteligencia artificial generativa no resuelve el problema por sí
+sola: la evidencia sistemática disponible indica que la IA generativa
+\emph{redistribuye} la carga docente más de lo que la reduce, porque añade trabajo
+de revisión, verificación y juicio sobre sus propias salidas
+\parencite{su2026efficiency}.
+
+Este documento presenta \textbf{EduCurator}, un sistema de curación asistida de
+documentación de cursos que combina recuperación de evidencia sobre el corpus del
+propio curso, detectores de redundancia e inconsistencia, un subagente con
+herramientas, evidencia estructurada y revisión humana obligatoria antes de
+cualquier publicación. La investigación se formula bajo
+\emph{Design Science Research} \parencite{peffers2007design,hevner2004design}, con
+punto de entrada en la actividad de diseño y desarrollo: el artefacto ya existe
+como MVP funcional y el trabajo pendiente es su demostración y evaluación
+controlada.
+
+El documento cumple dos funciones simultáneas. Como \textbf{protocolo}, define la
+pregunta de investigación, las proposiciones, las variables operacionalizadas, el
+benchmark con defectos plantados y controles negativos, la batería de
+configuraciones de comparación (heurísticas, recuperación dispersa, recuperación
+densa, canalización híbrida y sistema completo), las métricas de detección,
+\emph{grounding}, calibración y carga de trabajo, y el plan de análisis
+estadístico. Como \textbf{reporte de avance}, delimita qué está construido, qué
+evidencia técnica existe hoy y qué permanece abierto.
+
+\begin{estado}
+\small
+\textbf{Alcance de lo que aquí se afirma.} Este documento \emph{no} reporta
+resultados experimentales. No se afirma que EduCurator detecte inconsistencias con
+una precisión determinada, que reduzca el tiempo de curación, que sus puntajes de
+confianza estén calibrados ni que los docentes lo perciban como útil. Esas
+afirmaciones requieren la evidencia que la Parte V está diseñada para producir y
+que todavía no se ha recogido.
+\end{estado}
+
+\vspace{0.4em}
+\noindent\textbf{Palabras clave:} curación de contenidos educativos; generación
+aumentada por recuperación; agentes basados en modelos de lenguaje;
+\emph{human-in-the-loop}; trazabilidad; \emph{design science research}; carga de
+trabajo docente.
+
+\vspace{1.2em}
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+Course support material accumulates over successive semesters into corpora where
+redundant versions, contradictory statements and outdated content coexist. Keeping
+such a corpus coherent is a curation task that falls on the instructor and that the
+academic-workload literature places among the activities institutional workload
+models tend to overlook \parencite{kenny2023life}. Introducing generative AI does
+not solve this by itself: systematic evidence indicates that generative AI
+\emph{redistributes} teaching workload more than it reduces it, since it adds
+review, verification and judgement work over its own outputs
+\parencite{su2026efficiency}.
+
+This document presents \textbf{EduCurator}, an assisted curation system for course
+documentation that combines evidence retrieval over the course corpus, redundancy
+and inconsistency detectors, a tool-using sub-agent, structured evidence, and
+mandatory human review before any publication. The research is framed as
+\emph{Design Science Research} \parencite{peffers2007design,hevner2004design} with a
+design- and development-centred entry point: the artefact already exists as a
+functional MVP, and what remains is its demonstration and controlled evaluation.
+
+The document works both as a \textbf{protocol} --- research question, propositions,
+operationalised variables, a benchmark with planted defects and negative controls,
+a ladder of comparison configurations, detection, grounding, calibration and
+workload metrics, and a statistical analysis plan --- and as a
+\textbf{progress report} that states what has been built, what technical evidence
+exists today, and what remains open. \textbf{No experimental results are reported
+here.}
+
+\vspace{0.4em}
+\noindent\textbf{Keywords:} educational content curation; retrieval-augmented
+generation; LLM agents; human-in-the-loop; traceability; design science research;
+academic workload.

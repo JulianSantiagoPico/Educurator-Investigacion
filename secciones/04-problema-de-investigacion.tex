@@ -1,0 +1,116 @@
+% =====================================================================
+%  3. Problema de investigación
+% =====================================================================
+\section{Problema de investigación}
+\label{sec:problema}
+
+\subsection{Delimitación del objeto}
+\label{sec:problema-objeto}
+
+El objeto de esta investigación no es el repositorio institucional ni el recurso
+educativo abierto, sino el \textbf{corpus documental de un curso}: el conjunto de
+guías, apuntes, presentaciones, lecturas, listados de preguntas frecuentes y
+evaluaciones que un docente produce, edita y reutiliza a lo largo de varios
+semestres. Esta delimitación importa porque desplaza el problema respecto de la
+literatura de calidad de repositorios revisada en la
+sección~\ref{sec:contexto-calidad}:
+
+\begin{itemize}
+  \item La unidad de análisis no es el recurso aislado, sino la
+        \textbf{relación entre documentos}. Un documento puede ser individualmente
+        correcto y, aun así, contradecir a otro del mismo corpus.
+  \item No existe una comunidad de usuarios que ejerza control colaborativo de
+        calidad. El aseguramiento recae sobre una persona.
+  \item El corpus es \textbf{cerrado y conocido}, lo que hace posible verificar cada
+        afirmación contra documentos concretos en lugar de contra el conocimiento
+        general del mundo.
+\end{itemize}
+
+\subsection{Manifestaciones del problema}
+\label{sec:problema-manifestaciones}
+
+Sobre ese corpus se observan cuatro manifestaciones, que esta investigación trata
+como clases distintas y no como un único fenómeno de \enquote{desorden}:
+
+\begin{enumerate}
+  \item \textbf{Redundancia.} El mismo contenido aparece en varios documentos con
+        redacciones distintas. Dispersa la referencia autorizada y multiplica los
+        puntos que hay que actualizar cuando algo cambia.
+  \item \textbf{Inconsistencia o contradicción.} Dos documentos del corpus afirman
+        cosas incompatibles: un valor numérico, una definición, un procedimiento, un
+        plazo, un criterio de evaluación.
+  \item \textbf{Desactualización.} Un contenido que fue correcto deja de serlo
+        porque cambió el estándar, la versión de una tecnología o la normativa, y
+        permanece en circulación. Incluye el caso que
+        \textcite{leacock2007framework} señalan como degradación de la reusabilidad:
+        información específica de una instancia pasada (fechas, nombres, cupos).
+  \item \textbf{Ausencia de evidencia localizable.} No hay un punto desde el cual
+        consultar el corpus y establecer de qué documento y de qué fragmento
+        proviene una afirmación.
+\end{enumerate}
+
+La distinción entre las clases 2 y 4 no es retórica. La literatura de inferencia en
+lenguaje natural la trata como una distinción de clase: \textcite{koreeda2021contractnli}
+en inferencia a nivel documental sobre contratos, \textcite{thorne2018fever} en
+extracción y verificación de hechos, y \textcite{gubelmann2024capturing} en su
+revisión de conjuntos de datos de NLI separan \emph{contradice} de
+\emph{no hay información suficiente}. En estas tareas la contradicción es la clase
+más difícil y la clase neutral la peor reconocida por los modelos. Un sistema que
+colapse ambas categorías en \enquote{alerta} produce un tipo de error que el docente
+no puede interpretar: no distingue \enquote{esto se contradice con aquello} de
+\enquote{no encontré con qué comparar esto}.
+
+\subsection{La tensión que constituye el problema de investigación}
+\label{sec:problema-tension}
+
+Asistir la curación con modelos de lenguaje introduce el riesgo que la propia tarea
+pretende reducir. \textcite{huang2025survey} distinguen la alucinación de
+\emph{factualidad} --- contradecir o inventar hechos del mundo --- de la de
+\emph{fidelidad} --- apartarse del contexto proporcionado o contradecirlo --- y
+documentan que la recuperación aumentada no resuelve el problema:
+\textcquote[p.~26]{huang2025survey}{Despite being designed to mitigate LLM
+hallucinations, retrieval-augmented LLMs can still produce hallucinations}.
+
+El punto crítico para este proyecto está en las causas que identifican. Entre las
+fuentes de alucinación en sistemas RAG figuran las \textbf{fuentes con información
+incorrecta o desactualizada}, la fragmentación inadecuada del texto, el contexto
+ruidoso y los conflictos de conocimiento. En un corpus de curso con contradicciones,
+\emph{los propios documentos son esa fuente de riesgo}: el sistema recupera evidencia
+inconsistente y puede fundamentar sobre ella una sugerencia incorrecta. A ello se
+suma que los modelos no reconocen bien sus límites de conocimiento y producen
+falsedades con confianza, lo que vuelve insuficiente cualquier señal de confianza que
+no haya sido contrastada con la tasa real de acierto.
+
+De esta tensión surge el problema:
+
+\begin{estado}[colframe=ecAzul]
+\small
+\textbf{Problema de investigación.} Un sistema que asista la curación de un corpus
+de curso debe operar sobre un material que puede ser internamente inconsistente,
+usando un componente generativo que puede producir afirmaciones no fundamentadas y
+señales de confianza que pueden no corresponder a su tasa de acierto. Se desconoce
+\emph{en qué medida} una arquitectura que combina recuperación, detectores,
+razonamiento con herramientas, evidencia estructurada y revisión humana detecta las
+inconsistencias reales de ese corpus, \emph{qué componentes} de esa combinación
+explican su comportamiento, y \emph{con qué efecto} sobre el trabajo del docente.
+\end{estado}
+
+\subsection{Lo que el problema no incluye}
+\label{sec:problema-exclusiones}
+
+Para evitar que el objeto se desdibuje, se excluyen explícitamente:
+
+\begin{itemize}
+  \item La \textbf{verificación factual contra el mundo}. El criterio de corrección
+        es la consistencia con el corpus del curso y, cuando aplique, con las fuentes
+        externas que el docente autorice, no la verdad general de una afirmación.
+  \item La \textbf{evaluación del aprendizaje}. No se mide si un corpus más
+        coherente mejora resultados de aprendizaje; esa relación excede el alcance y
+        requiere un diseño distinto.
+  \item La \textbf{calidad pedagógica} en las dimensiones de LORI ajenas al
+        contenido (motivación, diseño de la presentación, accesibilidad). El sistema
+        no juzga si un material es didácticamente adecuado.
+  \item La \textbf{sustitución del juicio docente}. La decisión sobre qué se
+        conserva, qué se corrige y qué se descarta permanece fuera del sistema por
+        diseño, no por limitación técnica.
+\end{itemize}

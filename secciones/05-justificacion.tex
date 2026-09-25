@@ -1,0 +1,134 @@
+% =====================================================================
+%  4. Justificación
+% =====================================================================
+\section{Justificación}
+\label{sec:justificacion}
+
+\subsection{Justificación académica: un espacio poco sintetizado y poco riguroso}
+\label{sec:just-academica}
+
+La sección~\ref{sec:contexto-aied} documenta dos hechos que, combinados, definen el
+valor académico de esta investigación. El primero es de \emph{cobertura}: en la
+revisión terciaria de \textcite{bond2024meta}, la evaluación de materiales de
+aprendizaje con IA aparece en el 7,6\,\% de las revisiones y la curación de
+materiales en el 4,5\,\%; en el mapeo previo de \textcite{zawacki2019systematic}, la
+curación de materiales aparecía en 3 de 146 artículos. Cuando el tema aparece, se
+aborda midiendo el uso de la plataforma, no el contenido.
+
+El segundo es de \emph{rigor}: el 65\,\% de las revisiones analizadas por
+\textcite{bond2024meta} tiene calidad metodológica de crítica a media, el 51,5\,\%
+no reporta acuerdo entre revisores, y los autores piden explícitamente evaluar el
+efecto de las herramientas sobre las personas y no solo su exactitud técnica. Diez
+años antes, \textcite{zawacki2019systematic} ya señalaban estudios piloto con
+resultados \enquote{preliminares positivos} que no controlan el efecto novedad.
+
+La contribución académica que se pretende, entonces, no es \enquote{aplicar IA a la
+educación}, sino producir sobre un caso concreto el tipo de evidencia que el campo
+reclama: un benchmark con verdad de referencia anotada y acuerdo entre anotadores
+reportado, configuraciones de comparación que permitan atribuir el desempeño a
+componentes identificables, y un estudio con docentes que mida efecto sobre las
+personas además de exactitud técnica.
+
+\subsection{Justificación tecnológica: por qué esta combinación y no otra}
+\label{sec:just-tecnologica}
+
+Cada componente de la arquitectura responde a una limitación documentada, no a una
+preferencia de implementación:
+
+\begin{itemize}
+  \item La \textbf{recuperación de evidencia} responde a que el criterio de
+        corrección en este problema es la consistencia con el corpus del curso. Sin
+        recuperación, el sistema dependería de la memoria paramétrica del modelo, que
+        no es verificable contra los documentos del docente
+        \parencite{lewis2020retrieval}.
+  \item Los \textbf{detectores explícitos} responden a que la contradicción es la
+        clase más difícil de las tareas de inferencia documental
+        \parencite{koreeda2021contractnli,gubelmann2024capturing} y a que el
+        aseguramiento automatizado disponible en repositorios educativos no llega al
+        contenido, solo a metadatos y enlaces \parencite{clements2015open}.
+  \item La \textbf{evidencia estructurada} responde a las causas de alucinación en
+        sistemas RAG identificadas por \textcite{huang2025survey}, entre ellas las
+        fuentes incorrectas o desactualizadas; la atribución explícita de origen es
+        una de las mitigaciones que el propio survey señala.
+  \item La \textbf{revisión humana} responde a que la evaluación automática por sí
+        sola no basta para juzgar la sustancia de un recurso
+        \parencite{tabares2017modelo,clements2015open}, y a que la revisión humana
+        por sí sola subdetecta defectos \parencite{xie2018systematic}.
+\end{itemize}
+
+\begin{advertencia}
+Que cada componente responda a una limitación documentada justifica \emph{su
+inclusión en el diseño}; no demuestra que aporte valor en la práctica. Determinar
+cuáles de estos componentes explican efectivamente el comportamiento del sistema es
+precisamente el objeto de las ablaciones descritas en la Parte~V.
+\end{advertencia}
+
+\subsection{Justificación práctica: el riesgo de trasladar el costo al docente}
+\label{sec:just-practica}
+
+La justificación práctica de este proyecto no puede formularse como
+\enquote{ahorrar tiempo al docente}, porque esa afirmación es exactamente la que
+\textcite{su2026efficiency} muestran problemática. Se formula de otra manera: si un
+asistente de curación propone cambios sin evidencia localizable, el docente debe
+reconstruir por su cuenta la justificación de cada propuesta, y ese trabajo de
+verificación es la forma específica de intensificación que la revisión sistemática
+documenta.
+
+El diseño que aquí se evalúa apuesta por reducir ese costo de verificación haciendo
+que cada propuesta llegue acompañada del fragmento que la sustenta. La apuesta es
+falsable: si el tiempo de revisión y la carga percibida no difieren de una condición
+de revisión sin asistencia, la apuesta no se sostiene. El diseño experimental de la
+Parte~V está construido para que ese resultado sea posible y reportable.
+
+\subsection{Justificación normativa: qué exige un uso responsable}
+\label{sec:just-normativa}
+
+Dos marcos de referencia convergen en requisitos que este proyecto adopta como
+restricciones de diseño y como objetos de medición.
+
+El \emph{AI Risk Management Framework} del \textcite{nist2023airmf} sitúa la validez
+y la fiabilidad como base de las demás características de una IA confiable, y
+atraviesa todas ellas con transparencia y rendición de cuentas. Varias de sus
+subcategorías se traducen directamente en obligaciones para este proyecto: documentar
+los límites de conocimiento del sistema y cómo se supervisan sus salidas (MAP~2.2),
+documentar los procesos de supervisión humana (MAP~3.5), documentar conjuntos de
+prueba, métricas y herramientas de verificación (MEASURE~2.1), demostrar validez y
+fiabilidad declarando los límites de generalización (MEASURE~2.5) y evaluar seguridad
+y resiliencia (MEASURE~2.7). El marco recomienda además recoger datos sobre la
+frecuencia y las razones con que los humanos anulan las salidas de la IA, lo que en
+este proyecto se traduce en registrar los motivos de rechazo como dato de
+investigación y no solo como funcionalidad.
+
+La guía de \textcite{miao2023guidance} para IA generativa en educación e
+investigación establece que la agencia humana no debe cederse en decisiones de alto
+impacto, que las aplicaciones deben validarse ética y pedagógicamente antes de su
+adopción institucional, y que la IA generativa, por rápida que sea como fuente de
+información, no puede constituir una fuente autorizada de conocimiento
+\parencite[p.~26]{miao2023guidance}. Sobre el apoyo al docente, la guía es explícita
+en que los diseñadores humanos del currículo deben verificar el conocimiento factual
+y la pertinencia de lo que la IA sugiera \parencite[p.~31]{miao2023guidance}.
+
+\begin{estado}
+\small
+\textbf{Consecuencia de diseño.} Estos marcos no son un apartado ético decorativo:
+determinan que la revisión humana previa a la publicación sea una restricción
+arquitectónica no negociable, que la trazabilidad de cada decisión sea un
+requerimiento y no una característica opcional, y que los límites de generalización
+del sistema deban declararse junto con cualquier resultado que se reporte.
+\end{estado}
+
+\subsection{Justificación institucional}
+\label{sec:just-institucional}
+
+El proyecto se desarrolla en un contexto donde la evidencia sobre calidad de recursos
+educativos tiene antecedentes locales: \textcite{tabares2017modelo} aplican su modelo
+de evaluación por capas a la Federación de Repositorios de Objetos de Aprendizaje de
+Colombia. Trabajar sobre corpus de cursos en español añade además una condición que
+la literatura técnica revisada no cubre: la evidencia sobre recuperación y sobre
+jueces automáticos está dominada por el inglés --- las tareas de recuperación de
+MTEB son exclusivamente en inglés \parencite{muennighoff2023mteb} y los jueces
+entrenados de ARES pierden concordancia con la anotación humana al cambiar de idioma
+\parencite{saadfalcon2024ares} ---, lo que obliga a validar con datos en español los
+componentes que se adopten. Esta restricción se desarrolla en la
+Parte~V como una amenaza a la validez que el diseño debe controlar, no como un
+supuesto que pueda darse por resuelto.

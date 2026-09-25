@@ -1,0 +1,111 @@
+% =====================================================================
+%  EduCurator AI — Proyecto de investigación, versión V1
+%  Documento maestro. Compilar con: pdflatex -> biber -> pdflatex x2
+%
+%  Estructura por bloques de desarrollo (ver README.md):
+%    Bloque 0  Infraestructura + referencias.bib ............ LISTO
+%    Bloque 1  Parte I   Contexto y problema ................ LISTO
+%    Bloque 2  Parte II  Conocimiento existente y brecha .... pendiente
+%    Bloque 3  Parte III Investigación propuesta ............ pendiente
+%    Bloque 4  Parte IV  Artefacto desarrollado ............. pendiente
+%    Bloque 5  Parte V   Metodología de evaluación .......... pendiente
+%    Bloque 6  Parte VI  Estado de avance ................... pendiente
+%    Bloque 7  Parte VII Proyección, referencias y anexos ... pendiente
+% =====================================================================
+
+\documentclass[12pt,a4paper,oneside]{article}
+
+\input{preambulo}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+\input{secciones/00-portada}
+% ---------------------------------------------------------------------
+
+\clearpage
+\pagenumbering{roman}
+\input{secciones/01-resumen}
+
+\clearpage
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+
+% =====================================================================
+\part{Contexto y problema}
+% =====================================================================
+
+\input{secciones/02-introduccion}
+\input{secciones/03-contexto-del-problema}
+\input{secciones/04-problema-de-investigacion}
+\input{secciones/05-justificacion}
+
+% =====================================================================
+% \part{Conocimiento existente y oportunidad de investigación}
+% =====================================================================
+% \input{secciones/06-antecedentes}
+% \input{secciones/07-estado-del-arte}
+% \input{secciones/08-marco-teorico}
+% \input{secciones/09-marco-conceptual}
+% \input{secciones/10-brecha-de-investigacion}
+
+% =====================================================================
+% \part{Investigación propuesta}
+% =====================================================================
+% \input{secciones/11-preguntas}
+% \input{secciones/12-objetivos}
+% \input{secciones/13-proposiciones}
+% \input{secciones/14-variables}
+% \input{secciones/15-modelo-conceptual}
+
+% =====================================================================
+% \part{Artefacto desarrollado}
+% =====================================================================
+% \input{secciones/16-descripcion-educurator}
+% \input{secciones/17-arquitectura}
+% \input{secciones/18-componentes-ia}
+% \input{secciones/19-benchmark}
+% \input{secciones/20-estado-mvp}
+
+% =====================================================================
+% \part{Metodología de evaluación}
+% =====================================================================
+% \input{secciones/21-enfoque-metodologico}
+% \input{secciones/22-diseno-experimental}
+% \input{secciones/23-dataset-ground-truth}
+% \input{secciones/24-baselines-ablaciones}
+% \input{secciones/25-instrumentos}
+% \input{secciones/26-poblacion-muestra}
+% \input{secciones/27-metricas}
+% \input{secciones/28-plan-de-analisis}
+% \input{secciones/29-reproducibilidad}
+
+% =====================================================================
+% \part{Estado de avance}
+% =====================================================================
+% \input{secciones/30-avances}
+% \input{secciones/31-evidencia-disponible}
+% \input{secciones/32-pendientes}
+% \input{secciones/33-riesgos-limitaciones}
+
+% =====================================================================
+% \part{Proyección}
+% =====================================================================
+% \input{secciones/34-resultados-esperados}
+% \input{secciones/35-contribuciones}
+% \input{secciones/36-cronograma}
+% \input{secciones/37-etica}
+
+% =====================================================================
+\clearpage
+\printbibliography[title={Referencias}, heading=bibnumbered]
+% =====================================================================
+
+% \appendix
+% \input{secciones/A1-matriz-bibliografica}
+% \input{secciones/A2-instrumentos}
+% \input{secciones/A3-protocolo-benchmark}
+
+\end{document}

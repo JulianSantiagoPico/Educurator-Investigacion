@@ -1,0 +1,129 @@
+% =====================================================================
+%  preambulo.tex — EduCurator AI V1
+%  Configuración común del documento. No contiene texto del proyecto.
+% =====================================================================
+
+% --- Idioma y codificación ------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla,es-noquoting]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Geometría y espaciado ------------------------------------------
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=3cm,right=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parskip}{0.4em}
+
+% --- Tablas, figuras y listas ---------------------------------------
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\setlist{itemsep=0.2em,topsep=0.3em}
+
+% Columna X justificada a la izquierda y columna de ancho fijo centrada
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% --- Color y cajas ---------------------------------------------------
+\usepackage{xcolor}
+\definecolor{ecAzul}{HTML}{1F4E79}
+\definecolor{ecGris}{HTML}{4D4D4D}
+\definecolor{ecFondo}{HTML}{F2F5F8}
+\definecolor{ecBorde}{HTML}{C3D3E0}
+
+\usepackage[most]{tcolorbox}
+
+% Caja para advertencias metodológicas (lo que NO se puede afirmar)
+\newtcolorbox{advertencia}[1][]{%
+  enhanced, breakable,
+  colback=ecFondo, colframe=ecAzul,
+  boxrule=0.4pt, left=6pt, right=6pt, top=5pt, bottom=5pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  attach boxed title to top left={yshift=-2mm,xshift=4mm},
+  boxed title style={colback=ecAzul, boxrule=0pt, arc=1pt},
+  title={Advertencia metodológica}, #1}
+
+% Caja para delimitar el estado de una afirmación
+\newtcolorbox{estado}[1][]{%
+  enhanced, breakable,
+  colback=white, colframe=ecBorde,
+  boxrule=0.6pt, left=6pt, right=6pt, top=5pt, bottom=5pt,
+  fonttitle=\bfseries\small, coltitle=ecAzul,
+  #1}
+
+% --- Diagramas -------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,calc}
+
+\tikzset{
+  ecnodo/.style={draw=ecAzul, fill=ecFondo, rounded corners=2pt,
+                 align=center, font=\small, inner sep=5pt, minimum height=8mm},
+  ecvar/.style={draw=ecGris, fill=white, rounded corners=2pt,
+                align=center, font=\small, inner sep=5pt, minimum height=8mm},
+  ecflecha/.style={-{Stealth[length=2mm]}, draw=ecGris, thick}
+}
+
+% --- Encabezados y pies ---------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{ecGris}{EduCurator AI --- Investigación en curso}}
+\fancyhead[R]{\small\textcolor{ecGris}{\thepage}}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% --- Títulos ---------------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\Large\bfseries\color{ecAzul}}{\partname\ \thepart}{12pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{ecAzul}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{ecGris}}{\thesubsection}{1em}{}
+
+% --- Citas textuales -------------------------------------------------
+\usepackage[autostyle=true,english=american]{csquotes}
+
+% --- Bibliografía ----------------------------------------------------
+% APA 7 con biblatex + biber. En Overleaf: seleccionar compilador
+% pdfLaTeX y biber (Menu > Settings > TeX Live version reciente).
+\usepackage[
+  backend=biber,
+  style=apa,
+  sortcites=true,
+  sorting=nyt,
+  backref=false,
+  uniquename=false
+]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\addbibresource{referencias.bib}
+
+% --- Hipervínculos (cargar al final) --------------------------------
+\usepackage[hidelinks,breaklinks=true]{hyperref}
+\hypersetup{
+  pdftitle={EduCurator AI: desarrollo y evaluación en curso de un sistema agéntico para la curación asistida de contenidos educativos},
+  pdfauthor={Correa Restrepo, Manco Henao, Pico Garzón, Méndez Roa},
+  pdfsubject={Proyecto de investigación en curso},
+  pdfkeywords={curación de contenidos educativos, RAG, agentes LLM, human-in-the-loop, design science research}
+}
+\usepackage[spanish]{cleveref}
+
+% --- Comandos propios del proyecto -----------------------------------
+% Marca de pendiente: visible en el PDF para el equipo, se desactiva
+% cambiando \pendienteactivotrue por \pendienteactivofalse.
+\newif\ifpendienteactivo
+\pendienteactivotrue
+\newcommand{\pend}[1]{\ifpendienteactivo\textcolor{red}{\small\textsf{[PENDIENTE: #1]}}\fi}
+
+% Etiquetas del criterio de clasificación de párrafos (sección 24 del
+% documento de ajuste de enfoque).
+\newcommand{\etLit}{\textcolor{ecAzul}{\textsuperscript{(L)}}}   % literatura
+\newcommand{\etMvp}{\textcolor{ecAzul}{\textsuperscript{(A)}}}   % artefacto
+\newcommand{\etEval}{\textcolor{ecAzul}{\textsuperscript{(E)}}}  % a evaluar
+\newcommand{\etAbierto}{\textcolor{ecAzul}{\textsuperscript{(?)}}} % desconocido

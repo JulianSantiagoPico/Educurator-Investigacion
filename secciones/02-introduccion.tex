@@ -1,0 +1,107 @@
+% =====================================================================
+%  1. Introducción
+% =====================================================================
+\section{Introducción}
+\label{sec:introduccion}
+
+Este documento reporta el estado de una investigación en curso sobre
+\textbf{EduCurator}, un sistema de curación asistida de documentación de cursos
+universitarios. La investigación tiene una particularidad que conviene declarar
+desde el principio: el artefacto tecnológico \emph{ya existe}. Hay un producto
+mínimo viable (MVP) funcional que implementa la arquitectura propuesta y que puede
+ejecutar el flujo completo de curación sobre un corpus real. Lo que no existe
+todavía es la evidencia empírica sobre su desempeño.
+
+Esa asimetría define la naturaleza del documento. No se trata de un informe de
+resultados ni de la memoria de un desarrollo de software, sino de un
+\textbf{protocolo de investigación acompañado de un reporte de avance}: establece
+qué se quiere averiguar sobre el artefacto, con qué diseño experimental, con qué
+instrumentos y bajo qué criterios de análisis; y, en paralelo, delimita con
+precisión qué está construido y qué permanece abierto.
+
+\subsection{Por qué el artefacto no es el resultado}
+
+Un error frecuente en los proyectos de ingeniería con componente investigativo es
+presentar el sistema construido como si fuera el hallazgo de la investigación. Una
+funcionalidad implementada demuestra \emph{capacidad técnica}: que el sistema puede
+ejecutar una operación. Una evaluación demuestra \emph{desempeño}: con qué
+exactitud, bajo qué condiciones y frente a qué alternativas. Son afirmaciones de
+distinto tipo y requieren distinta evidencia.
+
+La metodología de \emph{Design Science Research} permite sostener esta distinción
+sin contradicción metodológica. \textcite{peffers2007design} admiten explícitamente
+puntos de entrada distintos al ciclo de investigación, entre ellos uno
+\emph{centrado en el diseño y desarrollo}, en el que el artefacto precede a la
+formalización del problema y de la evaluación. \textcite{hevner2004design} exigen,
+a cambio, que la contribución se demuestre mediante métodos de evaluación
+rigurosos: el artefacto por sí solo no constituye conocimiento. Este documento se
+sitúa exactamente en ese punto: el diseño y el desarrollo están hechos; la
+demostración y la evaluación son el trabajo que falta.
+
+\subsection{Qué pregunta abre el problema}
+
+La curación de material docente --- comparar versiones, detectar duplicados,
+identificar contradicciones, reconocer lo que quedó desactualizado --- es una tarea
+que crece con el volumen del corpus y que rara vez se completa de forma sistemática.
+La expectativa razonable sería que la inteligencia artificial generativa la aliviara.
+La evidencia sistemática disponible advierte contra esa expectativa: en una revisión
+PRISMA de 30 estudios empíricos, \textcite{su2026efficiency} encuentran que solo el
+20\,\% reporta reducción de la carga docente, el 16,7\,\% reporta aumento y el
+63,3\,\% reporta un efecto mixto. Su conclusión es que la IA generativa produce una
+transformación estructural más que una reducción:
+\textcquote[p.~11]{su2026efficiency}{the key change brought about by GenAI
+is not whether work becomes \enquote{less}, but how workload is redistributed}.
+
+El mecanismo que describen es directamente pertinente aquí: la IA ahorra tiempo en
+tareas procedimentales, pero añade trabajo de revisión de calidad de sus salidas,
+verificación de hechos y juicio sobre lo que propone. Es decir, un asistente de
+curación que proponga cambios sin evidencia verificable traslada al docente el costo
+de comprobarlos y puede terminar siendo una fuente neta de trabajo. Ese es el riesgo
+de diseño que EduCurator intenta atacar y, a la vez, la razón por la que su
+evaluación no puede limitarse a medir tiempo.
+
+\subsection{Función y organización del documento}
+
+El documento está organizado en siete partes:
+
+\begin{itemize}
+  \item La \textbf{Parte~I} sitúa el problema, lo delimita y lo justifica.
+  \item La \textbf{Parte~II} revisa el conocimiento existente en las ocho líneas
+        bibliográficas del proyecto y formula la brecha de investigación.
+  \item La \textbf{Parte~III} enuncia la pregunta, los objetivos --- separando los
+        de investigación de los de desarrollo ---, las proposiciones, las variables
+        operacionalizadas y el modelo conceptual que las vincula.
+  \item La \textbf{Parte~IV} describe el artefacto: qué propone, qué implementa y
+        qué no se sabe aún sobre él.
+  \item La \textbf{Parte~V} define la metodología de evaluación: benchmark,
+        configuraciones de comparación, ablaciones, instrumentos, métricas y plan de
+        análisis.
+  \item La \textbf{Parte~VI} reporta el estado de avance, la evidencia técnica
+        disponible y lo pendiente.
+  \item La \textbf{Parte~VII} enuncia resultados esperados, contribuciones
+        esperadas y el cronograma de validación.
+\end{itemize}
+
+\subsection{Criterio de lectura}
+\label{sec:criterio-lectura}
+
+Para mantener separadas afirmaciones de distinto estatus epistémico, cada
+enunciado sustantivo del documento corresponde a una de cuatro categorías:
+
+\begin{enumerate}[label=\textbf{(\Alph*)}]
+  \item \textbf{Lo que la literatura ya demuestra}, con su fuente.
+  \item \textbf{Lo que el MVP actualmente implementa}, verificable en el
+        repositorio.
+  \item \textbf{Lo que la investigación propone evaluar}, con su diseño.
+  \item \textbf{Lo que todavía no se conoce} y constituye el objeto de la
+        investigación.
+\end{enumerate}
+
+\begin{advertencia}
+Ningún enunciado de este documento afirma que EduCurator mejore la curación,
+reduzca el tiempo docente, elimine las alucinaciones o supere a alternativa alguna.
+Esas serían afirmaciones de la categoría (A) sin fuente que las respalde, o
+afirmaciones de la categoría (C) presentadas como si ya fueran (A). Donde el texto
+se refiere al comportamiento del sistema, lo hace en términos de lo que
+\emph{implementa} o de lo que \emph{se propone medir}.
+\end{advertencia}

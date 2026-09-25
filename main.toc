@@ -1,0 +1,27 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{Resumen}{\es@scroman {i}}{Doc-Start}%
+\contentsline {section}{Abstract}{\es@scroman {ii}}{Doc-Start}%
+\contentsline {part}{I\hspace {1em}Contexto y problema}{1}{part.1}%
+\contentsline {section}{\numberline {1}Introducción}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Por qué el artefacto no es el resultado}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Qué pregunta abre el problema}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Función y organización del documento}{2}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Criterio de lectura}{3}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Contexto del problema}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}La carga docente y sus componentes invisibles}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}La expectativa sobre la IA generativa y lo que la evidencia muestra}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Qué significa que un recurso educativo tenga calidad}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Qué automatiza hoy el aseguramiento de calidad}{5}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}El estado de la investigación sobre IA en educación superior}{6}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Problema de investigación}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Delimitación del objeto}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Manifestaciones del problema}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}La tensión que constituye el problema de investigación}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Lo que el problema no incluye}{8}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Justificación}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Justificación académica: un espacio poco sintetizado y poco riguroso}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Justificación tecnológica: por qué esta combinación y no otra}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Justificación práctica: el riesgo de trasladar el costo al docente}{10}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Justificación normativa: qué exige un uso responsable}{11}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Justificación institucional}{12}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Referencias}{13}{section.5}%
